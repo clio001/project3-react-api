@@ -1,8 +1,9 @@
 import "./App.css";
 
-// * Impoer components
+// * Import components
 import MainDisplay from "./MainDisplay";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 // * Import MUI
 import { Grid, Container } from "@mui/material";
@@ -14,8 +15,7 @@ function App() {
       <Container>
         <MainDisplay />
       </Container>
-
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
