@@ -2,9 +2,8 @@ import * as React from "react";
 import { useState } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ArchiveIcon from "@mui/icons-material/Archive";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ChatIcon from "@mui/icons-material/Chat";
 import Paper from "@mui/material/Paper";
 
 export default function Footer() {
@@ -12,7 +11,7 @@ export default function Footer() {
 
   return (
     <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+      sx={{ position: "fixed", bottom: 0, left: 0, right: 0, width: "100%" }}
       elevation={3}
     >
       <BottomNavigation
@@ -22,9 +21,10 @@ export default function Footer() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
+        <BottomNavigationAction
+          icon={<AccountCircleIcon color="secondary" />}
+        />
+        <BottomNavigationAction icon={<ChatIcon color="secondary" />} />
       </BottomNavigation>
     </Paper>
   );
