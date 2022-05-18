@@ -23,15 +23,18 @@ export default function Login() {
           <TextField
             required
             variant="standard"
+            color="secondary"
             label="Required"
-            defaultValue="Username"
+            defaultValue="Benutzername"
             sx={{ marginBottom: "20px" }}
           />
+          <br />
           <TextField
             required
             variant="standard"
+            color="secondary"
             label="Required"
-            defaultValue="Password"
+            defaultValue="Passwort"
           />
         </Box>
 

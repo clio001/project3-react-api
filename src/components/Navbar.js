@@ -6,8 +6,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky" color="secondary" elevation={0}>
@@ -21,10 +24,21 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            1989
-          </Typography>
-          <Button color="inherit">Einloggen</Button>
+          <Link to="/">
+            {" "}
+            <Typography variant="h6" component="div" mr={2}>
+              1989
+            </Typography>
+          </Link>
+          <Link to="../list">
+            {" "}
+            <Typography variant="subtitle1" component="div" mr={1}>
+              Sammlung
+            </Typography>
+          </Link>
+          <Link to="../login">
+            <Typography variant="subtitle1">Einloggen</Typography>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>
