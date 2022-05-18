@@ -24,12 +24,11 @@ export default function List() {
   const handleUserInput = (event) => {
     let value = document.querySelector("#userInputValue").value;
     setUserInput(value);
-    getData(url);
   };
 
   useEffect(() => {
     getData(url);
-  }, []);
+  }, [userInput]);
 
   return (
     <>
