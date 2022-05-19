@@ -10,7 +10,7 @@ export default function Home() {
           1989
         </Typography>
         <Typography variant="h5" mb={4}>
-          Erfahre die Geschichte des Falls der Berliner Mauer im Spiegel des
+          Entdecke die Geschichte des Falls der Berliner Mauer im Spiegel des
           europäischen Kulturerbes.
         </Typography>
         <Box sx={{ textAlign: "center" }}>

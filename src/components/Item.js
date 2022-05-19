@@ -1,10 +1,10 @@
 import React from "react";
 import { Grid, Typography, Paper, Box, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Item(props) {
-  const element = props.element;
-
-  /*  const imgURL = element.edmPreview.slice(0, element.edmPreview.length - 11); */
+  const [element, setElement] = useState(props.element);
 
   return (
     <>
@@ -18,9 +18,12 @@ export default function Item(props) {
             <Typography paragraph variant="h6">
               {element.title}
             </Typography>
-            <Button variant="outlined" color="secondary">
-              Details
-            </Button>
+            <Link to="../item" state={{ element }}>
+              {" "}
+              <Button variant="outlined" color="secondary">
+                Details
+              </Button>
+            </Link>
           </Box>
           <Box></Box>
         </Paper>

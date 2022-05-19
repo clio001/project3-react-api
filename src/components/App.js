@@ -12,6 +12,7 @@ import ViewList from "../screens/ViewList";
 import ViewLogin from "../screens/ViewLogin";
 import ViewChat from "../screens/ViewChat";
 import ViewHome from "../screens/ViewHome";
+import ViewItem from "../screens/ViewItem";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="login" element={<ViewLogin />} />
         <Route path="chat" element={<ViewChat />} />
         <Route path="/" element={<ViewHome />} />
+        <Route path="item" element={<ViewItem />} />
       </Routes>
     </Router>
   );

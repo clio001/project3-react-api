@@ -30,6 +30,7 @@ export default function List() {
   const handleUserInput = () => {
     let value = document.querySelector("#userInputValue").value;
     setUserInput(value);
+    setLoading(true);
   };
 
   const handleEnter = () => {
@@ -38,6 +39,7 @@ export default function List() {
       if (event.key === "Enter") {
         let value = document.querySelector("#userInputValue").value;
         setUserInput(value);
+        setLoading(true);
       }
     });
   };
