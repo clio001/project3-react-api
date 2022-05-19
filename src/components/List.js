@@ -8,31 +8,53 @@ import Item from "./Item";
 import { Typography, Grid, Box } from "@mui/material";
 import { useState, useEffect } from "react";
 import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import LinearProgress from "@mui/material/LinearProgress";
 
 export default function List() {
   const [myData, setMyData] = useState(null);
   const [userInput, setUserInput] = useState("Mauerfall");
+  const [loading, setLoading] = useState(true);
 
   const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${userInput}`;
 
   const getData = () => {
     fetch(url)
       .then((response) => response.json())
-      .then((myData) => setMyData(myData));
+      .then((myData) => {
+        setMyData(myData);
+        setLoading(false);
+      });
   };
 
-  const handleUserInput = (event) => {
+  const handleUserInput = () => {
     let value = document.querySelector("#userInputValue").value;
     setUserInput(value);
   };
 
+  const handleEnter = () => {
+    let inputField = document.querySelector("#userInputValue");
+    inputField.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        let value = document.querySelector("#userInputValue").value;
+        setUserInput(value);
+      }
+    });
+  };
+
   useEffect(() => {
     getData(url);
+    handleEnter();
   }, [userInput]);
 
   return (
     <>
-      <SearchBar handleUserInput={handleUserInput} />
+      <SearchBar input={handleUserInput} enter={handleEnter} />
+      {loading && (
+        <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
+          <LinearProgress color="secondary" />
+        </Stack>
+      )}
       <div className="logo">
         <Logo />
       </div>

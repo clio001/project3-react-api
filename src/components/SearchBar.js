@@ -3,13 +3,13 @@ import { Paper, Button, InputBase, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 export default function SearchBar(props) {
-  const handleUserInput = props.handleUserInput;
+  const handleUserInput = props.input;
+  const handleEnter = props.enter;
   return (
     <>
       <Box>
         <Paper
           elevation={3}
-          component="form"
           sx={{
             display: "flex",
             alignItems: "center",
@@ -23,6 +23,7 @@ export default function SearchBar(props) {
             sx={{ ml: 1, flex: 1 }}
             placeholder="Suchen ..."
             inputProps={{ "aria-label": "Suche" }}
+            onKeyUp={handleEnter}
           />
           <span>
             <Button
