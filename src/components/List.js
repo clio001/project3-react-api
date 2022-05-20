@@ -13,10 +13,13 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 export default function List() {
   const [myData, setMyData] = useState(null);
-  const [userInput, setUserInput] = useState("Mauerfall");
+  const [userInput, setUserInput] = useState("Berliner Mauer");
   const [loading, setLoading] = useState(true);
 
-  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${userInput}`;
+  const collection = "Deutsche Fotothek";
+
+  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${collection}+${userInput}`;
+  console.log(url);
 
   const getData = () => {
     fetch(url)
