@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Button, Paper } from "@mui/material";
+import { Box, Grid, Typography, Button, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -23,21 +23,42 @@ export default function Details() {
               {location.state.element.dataProvider},{" "}
               {location.state.element.country}
             </Typography>{" "}
-            <Typography variant="subtitle2">
-              Kategorien (records api)
-            </Typography>
-            <Typography variant="subtitle2">Creator (records api)</Typography>
             <Typography variant="subtitle2">Beschreibung</Typography>
             <Typography paragraph variant="body2">
               {location.state.element.dcDescription}
             </Typography>
-            <Typography variant="subtitle2">Jahr</Typography>
+            <Grid container>
+              <Grid item xs={6}>
+                {" "}
+                <Typography variant="subtitle2">Jahr</Typography>
+                <Typography paragraph variant="body2">
+                  dctermsCreated
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                {" "}
+                <Typography variant="subtitle2">Creator</Typography>
+                <Typography paragraph variant="body2">
+                  dcCreator
+                </Typography>
+              </Grid>
+            </Grid>
+            <Typography variant="subtitle2">Kategorien</Typography>
             <Typography paragraph variant="body2">
-              dctermsCreated (records api)
+              dcSubject (records api)
             </Typography>
             <Typography variant="subtitle2">Sprache</Typography>
+            <Typography paragraph variant="body2">
+              dcCreator (records api)
+            </Typography>
             <Typography variant="subtitle2">Institution</Typography>
+            <Typography paragraph variant="body2">
+              dcCreator (records api)
+            </Typography>
             <Typography variant="subtitle2">Rechte</Typography>
+            <Typography paragraph variant="body2">
+              dcCreator (records api)
+            </Typography>
             <Box
               style={{
                 textAlign: "center",

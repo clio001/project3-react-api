@@ -34,7 +34,10 @@ export default function Navbar() {
                   variant="h4"
                   component="div"
                   mr={2}
-                  style={{ letterSpacing: "0.2em" }}
+                  style={{
+                    letterSpacing: "0.2em",
+                    fontFamily: "Gloria Hallelujah",
+                  }}
                 >
                   1989
                 </Typography>

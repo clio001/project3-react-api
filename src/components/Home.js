@@ -6,7 +6,11 @@ export default function Home() {
   return (
     <div id="home-screen">
       <Box mt={14}>
-        <Typography variant="h1" component="h1">
+        <Typography
+          variant="h1"
+          component="h1"
+          style={{ fontFamily: "Gloria Hallelujah" }}
+        >
           1989
         </Typography>
         <Typography variant="h5" mb={4}>
