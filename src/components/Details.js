@@ -19,6 +19,28 @@ export default function Details() {
       });
   };
 
+  // * Loop over deSubject JSON object with nested arrays to catch all subject entries
+  let recordSubjects = [];
+  const getSubjects = (itemRecord) => {
+    let subjects = Object.entries(itemRecord.object.proxies[1].dcSubject);
+    console.log(subjects);
+
+    for (let i = 0; i < subjects.length; i++) {
+      for (let x = 0; x < subjects[i][1].length; x++) {
+        recordSubjects.push(subjects[i][1][x]);
+        console.log(recordSubjects);
+      }
+    }
+    console.log(recordSubjects);
+
+    recordSubjects.filter((element) => {
+      if (element.includes("#concept")) {
+        recordSubjects.pop(element);
+      }
+    });
+    return recordSubjects;
+  };
+
   useEffect(() => {
     getRecords(url);
   }, []);
@@ -89,11 +111,9 @@ export default function Details() {
                     {typeof itemRecord.object.proxies[1].dcSubject ==
                     "undefined"
                       ? "Kein Eintrag"
-                      : itemRecord.object.proxies[1].dcSubject.de.map(
-                          (each, i) => {
-                            return <span id="category-item">{each}</span>;
-                          }
-                        )}
+                      : getSubjects(itemRecord).map((each, i) => {
+                          return <span id="category-item">{each}</span>;
+                        })}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>

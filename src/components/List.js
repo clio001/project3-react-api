@@ -16,7 +16,7 @@ export default function List() {
   const [userInput, setUserInput] = useState("Berliner Mauer");
   const [loading, setLoading] = useState(true);
 
-  const collection = "Deutsche Fotothek";
+  const collection = "";
 
   const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${collection}+${userInput}`;
   console.log(url);
