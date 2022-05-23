@@ -1,7 +1,7 @@
 import * as React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 
@@ -12,8 +12,10 @@ export default function Footer() {
       elevation={3}
     >
       <BottomNavigation sx={{ alignItems: "center" }}>
-        <Link to="../chat">
-          <BottomNavigationAction icon={<FilterListIcon color="secondary" />} />
+        <Link to="../login">
+          <BottomNavigationAction
+            icon={<AccountCircleIcon color="secondary" />}
+          />
         </Link>
       </BottomNavigation>
     </Paper>

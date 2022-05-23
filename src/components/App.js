@@ -13,6 +13,9 @@ import ViewLogin from "../screens/ViewLogin";
 import ViewChat from "../screens/ViewChat";
 import ViewHome from "../screens/ViewHome";
 import ViewItem from "../screens/ViewItem";
+import ViewAbout from "../screens/ViewAbout";
+import ViewData from "../screens/ViewData";
+import ViewContact from "../screens/ViewContact";
 import { MyContextProvider } from "../context/MyContext";
 import { AuthContextProvider } from "../context/AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
@@ -23,18 +26,14 @@ function App() {
       <AuthContextProvider>
         <MyContextProvider>
           <Routes>
-            <Route
-              path="list"
-              element={
-                <ProtectedRoute>
-                  <ViewList />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="list" element={<ViewList />} />
             <Route path="login" element={<ViewLogin />} />
             <Route path="chat" element={<ViewChat />} />
             <Route path="/" element={<ViewHome />} />
             <Route path="item" element={<ViewItem />} />
+            <Route path="about" element={<ViewAbout />} />
+            <Route path="data" element={<ViewData />} />
+            <Route path="impressum" element={<ViewContact />} />
           </Routes>
         </MyContextProvider>
       </AuthContextProvider>
