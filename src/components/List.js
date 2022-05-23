@@ -6,19 +6,25 @@ import Logo from "./Logo";
 import Item from "./Item";
 
 import { Typography, Grid, Box } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import LinearProgress from "@mui/material/LinearProgress";
+import Pagination from "@mui/material/Pagination";
+import { myContext } from "../context/MyContext";
 
 export default function List() {
   const [myData, setMyData] = useState(null);
   const [userInput, setUserInput] = useState("Berliner Mauer");
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const { test } = useContext(myContext);
+
+  console.log("Test: ", test);
 
   const collection = "";
 
-  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${collection}+${userInput}`;
+  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${collection}+${userInput}&start=${page}&rows=1`;
   console.log(url);
 
   const getData = () => {
@@ -47,10 +53,16 @@ export default function List() {
     });
   };
 
+  const handleChange = (event) => {
+    let offset = page + 1;
+    console.log("offset ", offset);
+    setPage(offset);
+  };
+
   useEffect(() => {
     getData(url);
     handleEnter();
-  }, [userInput]);
+  }, [userInput, page]);
 
   return (
     <>
@@ -69,13 +81,21 @@ export default function List() {
           Ergebnisse: {myData && myData.totalResults}
         </Typography>
       </Box>
-
-      <Grid container mt={2} mb={10}>
+      <Grid container mt={2} mb={2}>
         {myData &&
           myData.items.map((element) => {
             return <Item key={element.id} element={element} />;
           })}
-      </Grid>
+      </Grid>{" "}
+      <Stack spacing={0} mb={10}>
+        <Pagination
+          count={myData && myData.totalResults}
+          variant="outlined"
+          color="secondary"
+          page={page}
+          onChange={handleChange}
+        />
+      </Stack>
     </>
   );
 }

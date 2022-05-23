@@ -13,17 +13,20 @@ import ViewLogin from "../screens/ViewLogin";
 import ViewChat from "../screens/ViewChat";
 import ViewHome from "../screens/ViewHome";
 import ViewItem from "../screens/ViewItem";
+import { MyContextProvider } from "../context/MyContext";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="list" element={<ViewList />} />
-        <Route path="login" element={<ViewLogin />} />
-        <Route path="chat" element={<ViewChat />} />
-        <Route path="/" element={<ViewHome />} />
-        <Route path="item" element={<ViewItem />} />
-      </Routes>
+      <MyContextProvider>
+        <Routes>
+          <Route path="list" element={<ViewList />} />
+          <Route path="login" element={<ViewLogin />} />
+          <Route path="chat" element={<ViewChat />} />
+          <Route path="/" element={<ViewHome />} />
+          <Route path="item" element={<ViewItem />} />
+        </Routes>
+      </MyContextProvider>
     </Router>
   );
 }
