@@ -14,19 +14,30 @@ import ViewChat from "../screens/ViewChat";
 import ViewHome from "../screens/ViewHome";
 import ViewItem from "../screens/ViewItem";
 import { MyContextProvider } from "../context/MyContext";
+import { AuthContextProvider } from "../context/AuthContext";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
     <Router>
-      <MyContextProvider>
-        <Routes>
-          <Route path="list" element={<ViewList />} />
-          <Route path="login" element={<ViewLogin />} />
-          <Route path="chat" element={<ViewChat />} />
-          <Route path="/" element={<ViewHome />} />
-          <Route path="item" element={<ViewItem />} />
-        </Routes>
-      </MyContextProvider>
+      <AuthContextProvider>
+        <MyContextProvider>
+          <Routes>
+            <Route
+              path="list"
+              element={
+                <ProtectedRoute>
+                  <ViewList />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="login" element={<ViewLogin />} />
+            <Route path="chat" element={<ViewChat />} />
+            <Route path="/" element={<ViewHome />} />
+            <Route path="item" element={<ViewItem />} />
+          </Routes>
+        </MyContextProvider>
+      </AuthContextProvider>
     </Router>
   );
 }

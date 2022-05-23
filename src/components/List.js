@@ -14,44 +14,17 @@ import Pagination from "@mui/material/Pagination";
 import { myContext } from "../context/MyContext";
 
 export default function List() {
-  const [myData, setMyData] = useState(null);
-  const [userInput, setUserInput] = useState("Berliner Mauer");
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const { test } = useContext(myContext);
-
-  console.log("Test: ", test);
-
-  const collection = "";
-
-  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${collection}+${userInput}&start=${page}&rows=1`;
-  console.log(url);
-
-  const getData = () => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((myData) => {
-        setMyData(myData);
-        setLoading(false);
-      });
-  };
-
-  const handleUserInput = () => {
-    let value = document.querySelector("#userInputValue").value;
-    setUserInput(value);
-    setLoading(true);
-  };
-
-  const handleEnter = () => {
-    let inputField = document.querySelector("#userInputValue");
-    inputField.addEventListener("keyup", (event) => {
-      if (event.key === "Enter") {
-        let value = document.querySelector("#userInputValue").value;
-        setUserInput(value);
-        setLoading(true);
-      }
-    });
-  };
+  const {
+    test,
+    myData,
+    loading,
+    getData,
+    url,
+    userInput,
+    handleUserInput,
+    handleEnter,
+  } = useContext(myContext);
 
   const handleChange = (event) => {
     let offset = page + 1;
