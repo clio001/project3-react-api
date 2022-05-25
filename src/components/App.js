@@ -18,6 +18,10 @@ import ViewData from "../screens/ViewData";
 import ViewContact from "../screens/ViewContact";
 import { MyContextProvider } from "../context/MyContext";
 import { AuthContextProvider } from "../context/AuthContext";
+import {
+  BookmarkContext,
+  BookmarkContextProvider,
+} from "../context/BookmarkContext";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
@@ -25,23 +29,26 @@ function App() {
     <Router>
       <AuthContextProvider>
         <MyContextProvider>
-          <Routes>
-            <Route path="list" element={<ViewList />} />
-            <Route path="login" element={<ViewLogin />} />
-            <Route
-              path="chat"
-              element={
-                <ProtectedRoute>
-                  <ViewChat />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/" element={<ViewHome />} />
-            <Route path="item" element={<ViewItem />} />
-            <Route path="about" element={<ViewAbout />} />
-            <Route path="data" element={<ViewData />} />
-            <Route path="impressum" element={<ViewContact />} />
-          </Routes>
+          <BookmarkContextProvider>
+            {" "}
+            <Routes>
+              <Route path="list" element={<ViewList />} />
+              <Route path="item" element={<ViewItem />} />
+              <Route path="login" element={<ViewLogin />} />
+              <Route
+                path="chat"
+                element={
+                  <ProtectedRoute>
+                    <ViewChat />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/" element={<ViewHome />} />
+              <Route path="about" element={<ViewAbout />} />
+              <Route path="data" element={<ViewData />} />
+              <Route path="impressum" element={<ViewContact />} />
+            </Routes>
+          </BookmarkContextProvider>
         </MyContextProvider>
       </AuthContextProvider>
     </Router>

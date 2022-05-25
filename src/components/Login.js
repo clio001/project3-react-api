@@ -3,12 +3,16 @@ import { Box } from "@mui/system";
 import React, { useContext, useEffect, useState } from "react";
 import { TextField, Button, Alert, Collapse } from "@mui/material";
 import { AuthContext } from "../context/AuthContext";
+import useIsAuthenticated from "../utils/useIsAuthenticated";
+import { Navigate } from "react-router-dom";
 
 export default function Login() {
   const { user, handleLogin, open, unfold } = useContext(AuthContext);
+  const isAuthenticated = useIsAuthenticated();
 
   return (
     <>
+      {isAuthenticated && <Navigate to="/chat" replace />}
       <Collapse in={open}>
         <Alert severity="success"> Herzlich willkommen, {user.name}!</Alert>
       </Collapse>

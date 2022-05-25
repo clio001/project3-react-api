@@ -51,13 +51,7 @@ export default function Navbar() {
               >
                 <MenuIcon />
               </IconButton>
-              <Offcanvas
-                show={show}
-                style={{
-                  backgroundImage:
-                    "linear-gradient(to bottom right, white, #F3E5F5)",
-                }}
-              >
+              <Offcanvas show={show}>
                 <Offcanvas.Header>
                   <Offcanvas.Title>s</Offcanvas.Title>
                 </Offcanvas.Header>

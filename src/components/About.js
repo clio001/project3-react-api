@@ -12,7 +12,7 @@ export default function About() {
         Entdecke die Geschichte des Falls der Berliner Mauer im Spiegel des
         europäischen Kulturerbes
       </Typography>
-      <Typography paragraph variant="body1" ml={2}>
+      <Typography paragraph variant="body1" ml={2} color="text.secondary">
         Der Fall der Berliner Mauer gilt als eines der zentralen Ereignisse des
         20. Jahrhunderts.
       </Typography>

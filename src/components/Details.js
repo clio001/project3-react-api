@@ -3,6 +3,7 @@ import { Box, Grid, Typography, Button, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import BookmarkButton from "./BookmarkButton";
 
 export default function Details() {
   window.scrollTo(0, 0);
@@ -56,7 +57,7 @@ export default function Details() {
               style={{ width: "100%" }}
             />
             <Box style={{ padding: "1rem" }}>
-              {" "}
+              <BookmarkButton />
               <Typography variant="h6">
                 {typeof itemRecord.object.proxies[1].dcTitle == "undefined"
                   ? location.state.element.title
