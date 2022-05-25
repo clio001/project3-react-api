@@ -12,7 +12,7 @@ export default function Chat() {
     >
       <Box sx={{ padding: "1.5rem" }}>
         <Typography variant="h4" component="h2" mb={1}>
-          Kommentare
+          Feedback
         </Typography>
       </Box>
 

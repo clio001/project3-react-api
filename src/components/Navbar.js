@@ -9,18 +9,21 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuList from "@mui/material/MenuList";
 import { ListItemIcon } from "@mui/material";
 import { ListItemText } from "@mui/material";
-import { ContentCut } from "@mui/icons-material";
 import { MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Offcanvas } from "react-bootstrap";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoIcon from "@mui/icons-material/Info";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+import { AuthContext } from "../context/AuthContext";
+import LogoutButton from "./LogoutButton";
+import ForumIcon from "@mui/icons-material/Forum";
 
 export default function Navbar() {
   const [show, setShow] = useState(false);
+  const { user } = useContext(AuthContext);
 
   /* const handleClose = () => setShow(false); */
   const handleShow = () => {
@@ -48,7 +51,13 @@ export default function Navbar() {
               >
                 <MenuIcon />
               </IconButton>
-              <Offcanvas show={show}>
+              <Offcanvas
+                show={show}
+                style={{
+                  backgroundImage:
+                    "linear-gradient(to bottom right, white, #F3E5F5)",
+                }}
+              >
                 <Offcanvas.Header>
                   <Offcanvas.Title>s</Offcanvas.Title>
                 </Offcanvas.Header>
@@ -70,6 +79,16 @@ export default function Navbar() {
                           <SearchIcon />
                         </ListItemIcon>
                         <ListItemText className="LinkDark">Suche</ListItemText>
+                      </MenuItem>
+                    </Link>
+                    <Link to="../chat">
+                      <MenuItem>
+                        <ListItemIcon>
+                          <ForumIcon />
+                        </ListItemIcon>
+                        <ListItemText className="LinkDark">
+                          Feedback
+                        </ListItemText>
                       </MenuItem>
                     </Link>
                     <Link to="../data">
@@ -110,19 +129,12 @@ export default function Navbar() {
                 </Typography>
               </Link>
             </Grid>
-            <Grid item xs={4} style={{ textAlign: "end" }}>
-              {/*               <Link to="../login">
-                <AccountCircleIcon />
-              </Link> */}
-            </Grid>
+            {user.name === "John" && (
+              <Grid item xs={4} style={{ textAlign: "end" }}>
+                <LogoutButton />
+              </Grid>
+            )}
           </Grid>
-
-          {/*  <Link to="../list">
-            {" "}
-            <Typography variant="subtitle1" component="div" mr={1}>
-              Sammlung
-            </Typography>
-          </Link> */}
         </Toolbar>
       </AppBar>
     </Box>

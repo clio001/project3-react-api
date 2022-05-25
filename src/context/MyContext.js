@@ -11,7 +11,7 @@ export const MyContextProvider = (props) => {
 
   const collection = "";
   const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${userInput}`;
-  console.log(url);
+  /* console.log(url); */
 
   const getData = () => {
     fetch(url)

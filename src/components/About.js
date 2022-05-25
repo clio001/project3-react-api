@@ -1,5 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
+import Logo from "./Logo";
 
 export default function About() {
   return (
@@ -15,6 +16,7 @@ export default function About() {
         Der Fall der Berliner Mauer gilt als eines der zentralen Ereignisse des
         20. Jahrhunderts.
       </Typography>
+      <Logo />
     </div>
   );
 }

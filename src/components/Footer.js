@@ -13,9 +13,7 @@ export default function Footer() {
     >
       <BottomNavigation sx={{ alignItems: "center" }}>
         <Link to="../login">
-          <BottomNavigationAction
-            icon={<AccountCircleIcon color="secondary" />}
-          />
+          <AccountCircleIcon color="secondary" />
         </Link>
       </BottomNavigation>
     </Paper>

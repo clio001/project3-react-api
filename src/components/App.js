@@ -28,7 +28,14 @@ function App() {
           <Routes>
             <Route path="list" element={<ViewList />} />
             <Route path="login" element={<ViewLogin />} />
-            <Route path="chat" element={<ViewChat />} />
+            <Route
+              path="chat"
+              element={
+                <ProtectedRoute>
+                  <ViewChat />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/" element={<ViewHome />} />
             <Route path="item" element={<ViewItem />} />
             <Route path="about" element={<ViewAbout />} />

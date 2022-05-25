@@ -1,34 +1,20 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useContext } from "react";
-import { TextField, Button, Paper, Alert, Collapse } from "@mui/material";
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { TextField, Button, Alert, Collapse } from "@mui/material";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
-  const { user, setUser } = useContext(AuthContext);
-  const [open, setOpen] = useState(false);
-
-  const handleLogin = () => {
-    let username = document.querySelector("#username").value;
-    let password = document.querySelector("#password").value;
-    setUser({ name: username, password: password });
-    if (user.name === "") {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
-    console.log("After login: ", user);
-  };
+  const { user, handleLogin, open, unfold } = useContext(AuthContext);
 
   return (
     <>
-      {user.name !== "" && (
-        <Collapse in={open}>
-          <Alert severity="success">{user.name} ist eingeloggt!</Alert>
-        </Collapse>
-      )}
-
+      <Collapse in={open}>
+        <Alert severity="success"> Herzlich willkommen, {user.name}!</Alert>
+      </Collapse>
+      <Collapse in={unfold}>
+        <Alert severity="info"> Benutzer:in nicht eingeloggt!</Alert>
+      </Collapse>
       <div
         style={{
           display: "flex",

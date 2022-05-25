@@ -2,7 +2,9 @@
   text-align: end;
 }
 
-a {
+a,
+a:hover,
+Link {
   text-decoration: none;
   color: white;
 }
