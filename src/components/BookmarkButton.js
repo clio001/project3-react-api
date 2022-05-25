@@ -11,21 +11,19 @@ export default function BookmarkButton() {
   return (
     <>
       {" "}
-      <div style={{ textAlign: "end" }}>
-        {checked ? (
-          <Tooltip title="Entfernen">
-            <IconButton>
-              <BookmarkIcon color="secondary" onClick={handleBookmark} />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Merken">
-            <IconButton>
-              <BookmarkBorderIcon color="secondary" onClick={handleBookmark} />
-            </IconButton>
-          </Tooltip>
-        )}
-      </div>
+      {checked ? (
+        <Tooltip title="Entfernen">
+          <IconButton>
+            <BookmarkIcon color="secondary" onClick={handleBookmark} />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <Tooltip title="Merken">
+          <IconButton>
+            <BookmarkBorderIcon color="secondary" onClick={handleBookmark} />
+          </IconButton>
+        </Tooltip>
+      )}
     </>
   );
 }
