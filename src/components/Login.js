@@ -7,18 +7,41 @@ import useIsAuthenticated from "../utils/useIsAuthenticated";
 import { Navigate } from "react-router-dom";
 
 export default function Login() {
-  const { user, handleLogin, open, unfold } = useContext(AuthContext);
+  const { user, login, open, unfold, register } = useContext(AuthContext);
   const isAuthenticated = useIsAuthenticated();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleRegister = () => {
+    // TODO: include checks for input type, characters, blank spaces
+    register(email, password);
+  };
+
+  const handleLogin = () => {
+    // TODO: include checks for input type, characters, blank spaces
+    login(email, password);
+  };
 
   return (
     <>
-      {isAuthenticated && <Navigate to="/chat" replace />}
-      <Collapse in={open}>
-        <Alert severity="success"> Herzlich willkommen, {user.name}!</Alert>
-      </Collapse>
-      <Collapse in={unfold}>
+      {/* {isAuthenticated && <Navigate to="/chat" replace />} */}
+      {user && (
+        <Collapse in={open}>
+          <Alert severity="success"> Herzlich willkommen, {user.email}!</Alert>
+        </Collapse>
+      )}
+      {/*       <Collapse in={unfold}>
         <Alert severity="info"> Benutzer:in nicht eingeloggt!</Alert>
-      </Collapse>
+      </Collapse> */}
       <div
         style={{
           display: "flex",
@@ -38,19 +61,21 @@ export default function Login() {
               required
               variant="standard"
               color="secondary"
-              label="Required"
+              label="E-Mail"
               id="username"
-              defaultValue="Benutzername"
               sx={{ marginBottom: "20px" }}
+              onChange={handleEmailChange}
             />
             <br />
             <TextField
               required
               variant="standard"
               color="secondary"
-              label="Required"
+              label="Passwort"
               id="password"
-              defaultValue="Passwort"
+              type="password"
+              autoComplete="current-password"
+              onChange={handlePasswordChange}
             />
           </Box>
 
@@ -63,8 +88,12 @@ export default function Login() {
             >
               Einloggen
             </Button>
-            <Button variant="outlined" color="secondary">
-              Abbrechen
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleRegister}
+            >
+              Anmelden
             </Button>
           </Box>
           <Box>

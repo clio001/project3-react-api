@@ -23,7 +23,7 @@ import ForumIcon from "@mui/icons-material/Forum";
 
 export default function Navbar() {
   const [show, setShow] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { status } = useContext(AuthContext);
 
   /* const handleClose = () => setShow(false); */
   const handleShow = () => {
@@ -123,7 +123,7 @@ export default function Navbar() {
                 </Typography>
               </Link>
             </Grid>
-            {user.name === "John" && (
+            {status && (
               <Grid item xs={4} style={{ textAlign: "end" }}>
                 <LogoutButton />
               </Grid>

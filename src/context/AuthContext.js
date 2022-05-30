@@ -1,36 +1,87 @@
 import React, { useEffect } from "react";
 import { createContext, useState } from "react";
-import { Navigate } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { auth } from "../config";
+import { FormatColorResetOutlined } from "@mui/icons-material";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
-  const [user, setUser] = useState({ name: "", password: "" });
+  const [user, setUser] = useState(null);
+  const [status, setStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const [unfold, setUnfold] = useState(false);
 
-  function showAlert() {
-    if (user.name !== "John") {
-      setOpen(false);
-      setUnfold(true);
-    } else {
-      setUnfold(false);
-      setOpen(true);
-    }
-  }
+  // * FIREBASE REGISTER FUNCTION
 
-  const handleLogin = () => {
-    let username = document.querySelector("#username").value;
+  const register = async (email, password) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    console.log("Registered: ", userCredential);
+    setOpen(true);
+  };
+
+  // * FIREBASE LOGIN FUNCTION
+
+  const login = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      const user = userCredential.user;
+      console.log("Logged in ", user.email);
+      setUser(user);
+      setOpen(true);
+      setStatus(true);
+    });
+
+    /*     let username = document.querySelector("#username").value;
     let password = document.querySelector("#password").value;
-    setUser({ name: username, password: password });
+
+    setUser({ name: username, password: password }); */
+  };
+
+  // * FIREBASE OBSERVER FUNCTION
+
+  const checkIfUserIsLoggedIn = () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        setStatus(true);
+        console.log("UID: ", uid);
+      } else {
+        setStatus(false);
+        console.log("User is logged out");
+      }
+    });
+  };
+
+  // * FIREBASE LOGOUT FUNCTION
+
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        setStatus(false);
+        console.log("Signed out!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
-    showAlert();
-  }, [user]);
+    checkIfUserIsLoggedIn();
+  }, [status]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, handleLogin, open, unfold }}>
+    <AuthContext.Provider
+      value={{ login, open, unfold, register, status, logout, user }}
+    >
       {props.children}
     </AuthContext.Provider>
   );

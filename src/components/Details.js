@@ -10,6 +10,7 @@ import ShareButton from "./ShareButton";
 export default function Details() {
   window.scrollTo(0, 0);
   const location = useLocation();
+  console.log("Location: ", location);
   const [itemRecord, setItemRecord] = useState(null);
 
   const url = location.state.element.link;
