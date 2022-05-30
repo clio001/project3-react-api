@@ -7,11 +7,13 @@ export const MyContextProvider = (props) => {
 
   const [myData, setMyData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userInput, setUserInput] = useState("Berliner Mauer");
+  const [userInput, setUserInput] = useState("Mauer");
+  const [rights, setRights] = useState("");
+  const [media, setMedia] = useState(false);
+  const [collection, setCollection] = useState("Deutsche Fotothek");
 
-  const collection = "";
-  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${userInput}`;
-  /* console.log(url); */
+  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${collection}+${userInput}${rights}`;
+  console.log(url);
 
   const getData = () => {
     fetch(url)
@@ -26,6 +28,7 @@ export const MyContextProvider = (props) => {
     let value = document.querySelector("#userInputValue").value;
     setUserInput(value);
     setLoading(true);
+    getData(url);
   };
 
   const handleEnter = () => {
@@ -37,6 +40,18 @@ export const MyContextProvider = (props) => {
         setLoading(true);
       }
     });
+  };
+
+  // * Advanced Search parameters:
+
+  const handleReusability = (event) => {
+    setRights(event.target.value);
+    console.log("Rechte: ", event.target.value);
+  };
+
+  const handleMedia = (event) => {
+    setMedia(event.target.value);
+    console.log("Media: ", event.target.value);
   };
 
   return (
@@ -54,6 +69,10 @@ export const MyContextProvider = (props) => {
         setUserInput,
         handleUserInput,
         handleEnter,
+        rights,
+        handleReusability,
+        media,
+        handleMedia,
       }}
     >
       {props.children}

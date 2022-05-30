@@ -51,7 +51,7 @@ export default function Navbar() {
               >
                 <MenuIcon />
               </IconButton>
-              <Offcanvas show={show}>
+              <Offcanvas show={show} style={{ width: "18rem" }}>
                 <Offcanvas.Header>
                   <Offcanvas.Title>s</Offcanvas.Title>
                 </Offcanvas.Header>

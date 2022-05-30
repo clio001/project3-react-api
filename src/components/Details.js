@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import BookmarkButton from "./BookmarkButton";
 import PDFButton from "./PDFButton";
+import ShareButton from "./ShareButton";
 
 export default function Details() {
   window.scrollTo(0, 0);
@@ -66,7 +67,8 @@ export default function Details() {
                 }}
               >
                 {" "}
-                <PDFButton element={location} />
+                <ShareButton itemRecord={itemRecord} />
+                <PDFButton element={location} fetch={itemRecord} />
                 <BookmarkButton />
               </Box>
               <Typography variant="h6">

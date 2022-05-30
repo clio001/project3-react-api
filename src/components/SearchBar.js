@@ -1,10 +1,26 @@
 import React from "react";
-import { Paper, Button, InputBase, Box } from "@mui/material";
+import { Paper, Button, InputBase, Box, ButtonGroup } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import { useState } from "react";
+import AdvancedSearch from "./AdvancedSearch";
 
 export default function SearchBar(props) {
   const handleUserInput = props.input;
   const handleEnter = props.enter;
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <Box>
@@ -26,16 +42,21 @@ export default function SearchBar(props) {
             onKeyUp={handleEnter}
           />
           <span>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={handleUserInput}
-              style={{ marginRight: "1rem" }}
-            >
-              <SearchIcon color="secondary" />
-            </Button>
+            <ButtonGroup variant="outlined" color="secondary">
+              <Button onClick={handleUserInput}>
+                <SearchIcon color="secondary" />
+              </Button>
+              <Button onClick={handleClick} style={{ marginRight: "0.5rem" }}>
+                <ExpandMoreIcon color="secondary" />
+              </Button>
+            </ButtonGroup>
           </span>
         </Paper>
+        <AdvancedSearch
+          open={open}
+          handleClose={handleClose}
+          anchor={anchorEl}
+        />
       </Box>
     </>
   );

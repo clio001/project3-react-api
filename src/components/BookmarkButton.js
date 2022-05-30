@@ -13,14 +13,14 @@ export default function BookmarkButton() {
       {" "}
       {checked ? (
         <Tooltip title="Entfernen">
-          <IconButton>
-            <BookmarkIcon color="secondary" onClick={handleBookmark} />
+          <IconButton onClick={handleBookmark}>
+            <BookmarkIcon color="secondary" />
           </IconButton>
         </Tooltip>
       ) : (
         <Tooltip title="Merken">
-          <IconButton>
-            <BookmarkBorderIcon color="secondary" onClick={handleBookmark} />
+          <IconButton onClick={handleBookmark}>
+            <BookmarkBorderIcon color="secondary" />
           </IconButton>
         </Tooltip>
       )}
