@@ -18,11 +18,11 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useState, useContext } from "react";
-import SearchIcon from "@mui/icons-material/Search";
+import CheckIcon from "@mui/icons-material/Check";
 import { myContext } from "../context/MyContext";
 
 export default function AdvancedSearch(props) {
-  const { rights, handleReusability, media, handleMedia } =
+  const { rights, handleReusability, media, handleMedia, handleSort } =
     useContext(myContext);
 
   const open = props.open;
@@ -129,16 +129,17 @@ export default function AdvancedSearch(props) {
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
+              onChange={handleSort}
             >
               <FormControlLabel
-                value="relevance"
+                value="random+desc"
                 control={<Radio color="secondary" size="small" />}
-                label="Relevanz"
+                label="Zufall"
               />
               <FormControlLabel
                 value="score"
                 control={<Radio color="secondary" size="small" />}
-                label="Score"
+                label="Relevanz"
               />
             </RadioGroup>
           </Box>
@@ -177,8 +178,8 @@ export default function AdvancedSearch(props) {
 
         <Divider />
         <Box sx={{ textAlign: "end" }} mr={11} mt={2} mb={1}>
-          <Button variant="outlined" color="secondary">
-            <SearchIcon />
+          <Button variant="outlined" color="secondary" onClick={handleClose}>
+            <CheckIcon />
           </Button>
         </Box>
       </Box>

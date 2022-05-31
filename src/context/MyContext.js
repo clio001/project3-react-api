@@ -11,9 +11,11 @@ export const MyContextProvider = (props) => {
   const [rights, setRights] = useState("");
   const [media, setMedia] = useState(false);
   const [collection, setCollection] = useState("Deutsche Fotothek");
+  const [sort, setSort] = useState("");
 
-  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${collection}+${userInput}${rights}`;
+  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&query=${collection}+${userInput}${rights}${sort}`;
   console.log(url);
+  console.log(sort);
 
   const getData = () => {
     fetch(url)
@@ -54,6 +56,10 @@ export const MyContextProvider = (props) => {
     console.log("Media: ", event.target.value);
   };
 
+  const handleSort = (event) => {
+    console.log(event.target.value);
+    setSort(`&sort=${event.target.value}`);
+  };
   return (
     <myContext.Provider
       value={{
@@ -73,6 +79,7 @@ export const MyContextProvider = (props) => {
         handleReusability,
         media,
         handleMedia,
+        handleSort,
       }}
     >
       {props.children}

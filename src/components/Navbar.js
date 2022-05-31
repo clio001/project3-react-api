@@ -57,16 +57,22 @@ export default function Navbar() {
               >
                 <MenuIcon />
               </IconButton>
-              <Offcanvas show={show} style={{ width: "18rem" }}>
+              <Offcanvas
+                show={show}
+                onHide={handleShow}
+                style={{ width: "18rem" }}
+              >
                 <Offcanvas.Header>
                   <Offcanvas.Title>s</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  {isAuthenticated && (
+                  {user && (
                     <div>
                       <Box m={1}>
+                        {" "}
                         <PersonIcon
                           fontSize="large"
+                          color="secondary"
                           style={{ marginBottom: "0.5rem" }}
                         />
                         <Typography mb={2}>{user.email}</Typography>

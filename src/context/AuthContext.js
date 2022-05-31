@@ -15,6 +15,9 @@ export const AuthContextProvider = (props) => {
   const [status, setStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const [unfold, setUnfold] = useState(false);
+  function closeBanner() {
+    setOpen(false);
+  }
 
   // * FIREBASE REGISTER FUNCTION
 
@@ -25,14 +28,14 @@ export const AuthContextProvider = (props) => {
       password
     );
     console.log("Registered: ", userCredential);
+    console.log("Status: ", status);
+    setUser(userCredential.user);
     setOpen(true);
+    setStatus(true);
+    setTimeout(closeBanner, 3000);
   };
 
   // * FIREBASE LOGIN FUNCTION
-
-  const closeBanner = () => {
-    setOpen(false);
-  };
 
   const login = (email, password) => {
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
@@ -52,8 +55,10 @@ export const AuthContextProvider = (props) => {
       if (user) {
         const uid = user.uid;
         setStatus(true);
+        setUser(user);
       } else {
         setStatus(false);
+        setUser(null);
         setOpen(false);
       }
     });
@@ -65,6 +70,8 @@ export const AuthContextProvider = (props) => {
     signOut(auth)
       .then(() => {
         setStatus(false);
+        setUser(null);
+        setOpen(false);
         console.log("Signed out!");
       })
       .catch((error) => {
@@ -78,7 +85,7 @@ export const AuthContextProvider = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ login, open, unfold, register, status, logout, user }}
+      value={{ login, open, unfold, register, status, logout, user, auth }}
     >
       {props.children}
     </AuthContext.Provider>

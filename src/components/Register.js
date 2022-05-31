@@ -5,16 +5,13 @@ import { TextField, Button, Alert, Collapse } from "@mui/material";
 import { AuthContext } from "../context/AuthContext";
 import useIsAuthenticated from "../utils/useIsAuthenticated";
 import { Link } from "react-router-dom";
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import GoogleIcon from "@mui/icons-material/Google";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-export default function Login() {
-  const { user, login, open, auth } = useContext(AuthContext);
+export default function Register() {
+  const { user, open, unfold, register } = useContext(AuthContext);
   const isAuthenticated = useIsAuthenticated();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  console.log("Auth: ", auth);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -24,19 +21,22 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     // TODO: include checks for input type, characters, blank spaces
-    login(email, password);
+    register(email, password);
   };
 
   return (
     <>
       {/* {isAuthenticated && <Navigate to="/chat" replace />} */}
       {user && (
-        <Collapse in={open} style={{ zIndex: "10" }}>
-          <Alert severity="success"> Herzlich willkommen, {user.email}!</Alert>
+        <Collapse in={open}>
+          <Alert severity="success"> Account erstellt: {user.email}</Alert>
         </Collapse>
       )}
+      {/*       <Collapse in={unfold}>
+        <Alert severity="info"> Benutzer:in nicht eingeloggt!</Alert>
+      </Collapse> */}
       <div
         style={{
           display: "flex",
@@ -53,7 +53,7 @@ export default function Login() {
             mb={5}
             style={{ fontFamily: "Gloria Hallelujah" }}
           >
-            Anmelden
+            Neuer Account
           </Typography>
 
           <Box mb={5}>
@@ -84,32 +84,17 @@ export default function Login() {
             <Button
               variant="outlined"
               color="secondary"
-              sx={{ marginRight: "1rem" }}
-              onClick={handleLogin}
-            >
-              Anmelden
-            </Button>
-            {/*             <Button
-              variant="outlined"
-              color="secondary"
               onClick={handleRegister}
             >
-              Anmelden
-            </Button> */}
+              Erstellen
+            </Button>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <Link to="/register">
+          <Box>
+            <Link to="/login">
               <IconButton>
-                <PersonAddAltIcon />
+                <AccountCircleIcon />
               </IconButton>
-              <Button color="secondary">Erstellen</Button>
-            </Link>
-            <Link to="/">
-              {" "}
-              <IconButton>
-                <GoogleIcon />
-              </IconButton>
-              <Button color="secondary">Google</Button>
+              <Button color="secondary">Anmelden</Button>
             </Link>
           </Box>
         </Box>

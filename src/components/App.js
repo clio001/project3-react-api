@@ -16,14 +16,15 @@ import ViewItem from "../screens/ViewItem";
 import ViewAbout from "../screens/ViewAbout";
 import ViewData from "../screens/ViewData";
 import ViewContact from "../screens/ViewContact";
+import ViewRegister from "../screens/ViewRegister";
 import { MyContextProvider } from "../context/MyContext";
+import ViewBookmarks from "../screens/ViewBookmarks";
 import { AuthContextProvider } from "../context/AuthContext";
 import {
   BookmarkContext,
   BookmarkContextProvider,
 } from "../context/BookmarkContext";
 import ProtectedRoute from "./ProtectedRoute";
-import ViewBookmarks from "../screens/ViewBookmarks";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="list" element={<ViewList />} />
               <Route path="item" element={<ViewItem />} />
               <Route path="login" element={<ViewLogin />} />
+              <Route path="register" element={<ViewRegister />} />
               <Route
                 path="chat"
                 element={

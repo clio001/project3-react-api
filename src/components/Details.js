@@ -2,12 +2,14 @@ import React from "react";
 import { Box, Grid, Typography, Button, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import BookmarkButton from "./BookmarkButton";
 import PDFButton from "./PDFButton";
 import ShareButton from "./ShareButton";
 
 export default function Details() {
+  const { status } = useContext(AuthContext);
   window.scrollTo(0, 0);
   const location = useLocation();
   console.log("Location: ", location);
@@ -70,7 +72,7 @@ export default function Details() {
                 {" "}
                 <ShareButton itemRecord={itemRecord} />
                 <PDFButton element={location} fetch={itemRecord} />
-                <BookmarkButton />
+                {status && <BookmarkButton />}
               </Box>
               <Typography variant="h6">
                 {typeof itemRecord.object.proxies[1].dcTitle == "undefined"
