@@ -1,6 +1,5 @@
 import * as React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";

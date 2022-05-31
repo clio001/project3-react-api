@@ -9,7 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuList from "@mui/material/MenuList";
 import { ListItemIcon } from "@mui/material";
 import { ListItemText } from "@mui/material";
-import { MenuItem } from "@mui/material";
+import { MenuItem, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { Offcanvas } from "react-bootstrap";
@@ -20,10 +20,16 @@ import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import { AuthContext } from "../context/AuthContext";
 import LogoutButton from "./LogoutButton";
 import ForumIcon from "@mui/icons-material/Forum";
+import useIsAuthenticated from "../utils/useIsAuthenticated";
+import PersonIcon from "@mui/icons-material/Person";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export default function Navbar() {
   const [show, setShow] = useState(false);
-  const { status } = useContext(AuthContext);
+  const { status, user, logout } = useContext(AuthContext);
+  const isAuthenticated = useIsAuthenticated();
 
   /* const handleClose = () => setShow(false); */
   const handleShow = () => {
@@ -56,6 +62,45 @@ export default function Navbar() {
                   <Offcanvas.Title>s</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
+                  {isAuthenticated && (
+                    <div>
+                      <Box m={1}>
+                        <PersonIcon
+                          fontSize="large"
+                          style={{ marginBottom: "0.5rem" }}
+                        />
+                        <Typography mb={2}>{user.email}</Typography>
+                      </Box>
+
+                      <Divider />
+                      <Box mt={1} mb={1}>
+                        {" "}
+                        <Link to="../bookmarks">
+                          <MenuItem>
+                            <ListItemIcon>
+                              <CollectionsBookmarkIcon />
+                            </ListItemIcon>
+                            <ListItemText className="LinkDark">
+                              Meine Sammlung
+                            </ListItemText>
+                          </MenuItem>
+                        </Link>
+                        <Link to="../chat">
+                          <MenuItem>
+                            <ListItemIcon>
+                              <ForumIcon />
+                            </ListItemIcon>
+                            <ListItemText className="LinkDark">
+                              Feedback
+                            </ListItemText>
+                          </MenuItem>
+                        </Link>
+                      </Box>
+
+                      <Divider />
+                    </div>
+                  )}
+
                   <MenuList>
                     <Link to="../about">
                       <MenuItem>
@@ -75,16 +120,7 @@ export default function Navbar() {
                         <ListItemText className="LinkDark">Suche</ListItemText>
                       </MenuItem>
                     </Link>
-                    <Link to="../chat">
-                      <MenuItem>
-                        <ListItemIcon>
-                          <ForumIcon />
-                        </ListItemIcon>
-                        <ListItemText className="LinkDark">
-                          Feedback
-                        </ListItemText>
-                      </MenuItem>
-                    </Link>
+
                     <Link to="../data">
                       <MenuItem>
                         <ListItemIcon>
@@ -103,6 +139,30 @@ export default function Navbar() {
                         </ListItemText>
                       </MenuItem>
                     </Link>
+                    <Divider />
+                    <Box mt={1}>
+                      {isAuthenticated ? (
+                        <MenuItem onClick={logout}>
+                          <ListItemIcon>
+                            <LogoutIcon />
+                          </ListItemIcon>
+                          <ListItemText className="LinkDark">
+                            Abmelden
+                          </ListItemText>
+                        </MenuItem>
+                      ) : (
+                        <Link to="../login">
+                          <MenuItem>
+                            <ListItemIcon>
+                              <AccountCircleIcon />
+                            </ListItemIcon>
+                            <ListItemText className="LinkDark">
+                              Anmelden
+                            </ListItemText>
+                          </MenuItem>
+                        </Link>
+                      )}
+                    </Box>
                   </MenuList>
                 </Offcanvas.Body>
               </Offcanvas>

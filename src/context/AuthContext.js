@@ -7,7 +7,6 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../config";
-import { FormatColorResetOutlined } from "@mui/icons-material";
 
 export const AuthContext = createContext();
 
@@ -31,6 +30,10 @@ export const AuthContextProvider = (props) => {
 
   // * FIREBASE LOGIN FUNCTION
 
+  const closeBanner = () => {
+    setOpen(false);
+  };
+
   const login = (email, password) => {
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
       const user = userCredential.user;
@@ -38,12 +41,8 @@ export const AuthContextProvider = (props) => {
       setUser(user);
       setOpen(true);
       setStatus(true);
+      setTimeout(closeBanner, 3000);
     });
-
-    /*     let username = document.querySelector("#username").value;
-    let password = document.querySelector("#password").value;
-
-    setUser({ name: username, password: password }); */
   };
 
   // * FIREBASE OBSERVER FUNCTION
@@ -53,10 +52,9 @@ export const AuthContextProvider = (props) => {
       if (user) {
         const uid = user.uid;
         setStatus(true);
-        console.log("UID: ", uid);
       } else {
         setStatus(false);
-        console.log("User is logged out");
+        setOpen(false);
       }
     });
   };
@@ -76,7 +74,7 @@ export const AuthContextProvider = (props) => {
 
   useEffect(() => {
     checkIfUserIsLoggedIn();
-  }, [status]);
+  }, []);
 
   return (
     <AuthContext.Provider

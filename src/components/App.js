@@ -23,6 +23,7 @@ import {
   BookmarkContextProvider,
 } from "../context/BookmarkContext";
 import ProtectedRoute from "./ProtectedRoute";
+import ViewBookmarks from "../screens/ViewBookmarks";
 
 function App() {
   return (
@@ -40,6 +41,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <ViewChat />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="bookmarks"
+                element={
+                  <ProtectedRoute>
+                    <ViewBookmarks />
                   </ProtectedRoute>
                 }
               />
