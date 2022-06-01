@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Typography,
-  FormLabel,
   Menu,
   MenuItem,
   Select,
@@ -14,16 +13,27 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import { myContext } from "../context/MyContext";
 
 export default function AdvancedSearch(props) {
-  const { rights, handleReusability, media, handleMedia, handleSort } =
-    useContext(myContext);
+  const {
+    rights,
+    handleReusability,
+    handleSort,
+    handleSlider,
+    checkboxElement,
+    fotothek,
+    welle,
+    handleWelle,
+    handleFotothek,
+    mark,
+    random,
+    score,
+  } = useContext(myContext);
 
   const open = props.open;
   const handleClose = props.handleClose;
@@ -77,11 +87,31 @@ export default function AdvancedSearch(props) {
         </Divider>
         <Box ml={2} mb={2} style={{ display: "flex", flexDirection: "column" }}>
           <FormControlLabel
-            control={<Checkbox color="secondary" size="small" defaultChecked />}
+            control={
+              <Checkbox
+                ref={checkboxElement}
+                color="secondary"
+                size="small"
+                checked={fotothek}
+                value="Deutsche Fotothek"
+                onChange={handleFotothek}
+                id="fotothek"
+              />
+            }
             label="Deutsche Fotothek"
           />
           <FormControlLabel
-            control={<Checkbox color="secondary" size="small" disabled />}
+            control={
+              <Checkbox
+                ref={checkboxElement}
+                color="secondary"
+                size="small"
+                checked={welle}
+                value="Deutsche Welle"
+                onChange={handleWelle}
+                id="welle"
+              />
+            }
             label="Deutsche Welle"
           />
           <FormControlLabel
@@ -92,16 +122,52 @@ export default function AdvancedSearch(props) {
         </Box>
         <Divider textAlign="left">
           <Typography variant="body2" color="text.secondary">
-            Weitere Parameter
+            Sortierung
           </Typography>
         </Divider>
+
         <Box
-          mt={2}
+          mt={1}
           ml={2}
           mb={2}
           style={{ display: "flex", flexDirection: "column" }}
         >
           {" "}
+          <Box>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              onChange={handleSort}
+            >
+              <FormControlLabel
+                value="random+desc"
+                control={
+                  <Radio color="secondary" size="small" checked={random} />
+                }
+                label="Zufall"
+              />
+              <FormControlLabel
+                value="score"
+                control={
+                  <Radio color="secondary" size="small" checked={score} />
+                }
+                label="Relevanz"
+              />
+            </RadioGroup>
+          </Box>{" "}
+        </Box>
+        <Divider textAlign="left">
+          <Typography variant="body2" color="text.secondary">
+            Rechte
+          </Typography>
+        </Divider>
+        <Box
+          mt={1}
+          ml={2}
+          mb={2}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <Box mb={1}>
             <FormControl sx={{ width: "18rem" }} size="small">
               <InputLabel id="demo-select-large" color="secondary">
@@ -124,32 +190,18 @@ export default function AdvancedSearch(props) {
               </Select>
             </FormControl>
           </Box>
-          <Box>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-              onChange={handleSort}
-            >
-              <FormControlLabel
-                value="random+desc"
-                control={<Radio color="secondary" size="small" />}
-                label="Zufall"
-              />
-              <FormControlLabel
-                value="score"
-                control={<Radio color="secondary" size="small" />}
-                label="Relevanz"
-              />
-            </RadioGroup>
-          </Box>
-          <Box>
-            <FormControlLabel
-              control={<Checkbox color="secondary" size="small" />}
-              label="Medien vorhanden"
-              onChange={handleMedia}
-            />
-          </Box>
+        </Box>
+        <Divider textAlign="left">
+          <Typography variant="body2" color="text.secondary">
+            Anzahl der Resultate
+          </Typography>
+        </Divider>
+        <Box
+          mt={1}
+          ml={2}
+          mb={2}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <Box sx={{ width: "18rem" }}>
             <Box
               sx={{
@@ -157,13 +209,9 @@ export default function AdvancedSearch(props) {
                 flexDirection: "row",
                 alignItems: "center",
               }}
-              mb={1}
             >
-              <Typography variant="body2" mr={1}>
-                Resultate
-              </Typography>
               <Slider
-                defaultValue={20}
+                defaultValue={mark}
                 /* getAriaValueText={valuetext} */
                 valueLabelDisplay="auto"
                 step={10}
@@ -171,6 +219,7 @@ export default function AdvancedSearch(props) {
                 min={10}
                 max={100}
                 color="secondary"
+                onChange={handleSlider}
               />
             </Box>
           </Box>
