@@ -40,7 +40,6 @@ export const AuthContextProvider = (props) => {
   const login = (email, password) => {
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
       const user = userCredential.user;
-      console.log("Logged in ", user.email);
       setUser(user);
       setOpen(true);
       setStatus(true);
@@ -72,7 +71,6 @@ export const AuthContextProvider = (props) => {
         setStatus(false);
         setUser(null);
         setOpen(false);
-        console.log("Signed out!");
       })
       .catch((error) => {
         console.log(error);

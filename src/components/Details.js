@@ -12,7 +12,6 @@ export default function Details() {
   const { status } = useContext(AuthContext);
   window.scrollTo(0, 0);
   const location = useLocation();
-  console.log("Location: ", location);
   const [itemRecord, setItemRecord] = useState(null);
 
   const url = location.state.element.link;
@@ -29,15 +28,12 @@ export default function Details() {
   let recordSubjects = [];
   const getSubjects = (itemRecord) => {
     let subjects = Object.entries(itemRecord.object.proxies[1].dcSubject);
-    console.log(subjects);
 
     for (let i = 0; i < subjects.length; i++) {
       for (let x = 0; x < subjects[i][1].length; x++) {
         recordSubjects.push(subjects[i][1][x]);
-        console.log(recordSubjects);
       }
     }
-    console.log(recordSubjects);
 
     recordSubjects.filter((element) => {
       if (element.includes("#concept")) {

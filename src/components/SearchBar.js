@@ -2,8 +2,6 @@ import React from "react";
 import { Paper, Button, InputBase, Box, ButtonGroup } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
 import AdvancedSearch from "./AdvancedSearch";
 
@@ -47,7 +45,7 @@ export default function SearchBar(props) {
                 <SearchIcon color="secondary" />
               </Button>
               <Button onClick={handleClick} style={{ marginRight: "0.5rem" }}>
-                <ExpandMoreIcon color="secondary" />
+                <ExpandMoreIcon variant="outlined" color="secondary" />
               </Button>
             </ButtonGroup>
           </span>

@@ -1,6 +1,6 @@
 import React from "react";
 import Chat from "../components/Chat";
-import Footer from "../components/Footer";
+import FooterChat from "../components/FooterChat";
 import Navbar from "../components/Navbar";
 
 export default function ViewChat() {
@@ -8,7 +8,7 @@ export default function ViewChat() {
     <>
       <Navbar />
       <Chat />
-      <Footer />
+      <FooterChat />
     </>
   );
 }

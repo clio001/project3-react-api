@@ -1,7 +1,25 @@
-import React from "react";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import React, { useContext, useState } from "react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Grid,
+  Typography,
+  Paper,
+  InputBase,
+  IconButton,
+} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+import ChatMessageLeft from "./ChatMessageLeft";
+import ChatMessageRight from "./ChatMessageRight";
+import { myContext } from "../context/MyContext";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Chat() {
+  const { messages, handleNewMsg, addChatMsg, documentID } =
+    useContext(myContext);
+  const { user } = useContext(AuthContext);
+
   return (
     <div
       style={{
@@ -20,40 +38,27 @@ export default function Chat() {
           Feedback
         </Typography>
       </Box>
-
-      <Grid container sx={{ padding: "1rem" }}>
-        <Grid
-          item
-          sx={{
-            padding: "1rem",
-            backgroundColor: "#F3E5F5",
-            borderRadius: "10px",
-            width: "80%",
-            textAlign: "start",
-            marginBottom: "10px",
-          }}
-        >
-          <Typography variant="body2">
-            Sehr spannend mehr über den Hintergrund dieser Geschichte zu lernen.
-          </Typography>
-        </Grid>
-        <Grid item></Grid>
-        <Grid
-          item
-          sx={{
-            padding: "1rem",
-            backgroundColor: "#F3E5F5",
-            borderRadius: "10px",
-            width: "80%",
-            textAlign: "start",
-            marginBottom: "10px",
-          }}
-        >
-          <Typography variant="body2">
-            Was für ein interessantes Objekt!
-          </Typography>
-        </Grid>
-        <Grid item></Grid>
+      <Grid container sx={{ padding: "1rem" }} mb={5}>
+        {messages &&
+          messages.map((message, index) => {
+            if (index % 2 === 0) {
+              return (
+                <ChatMessageLeft
+                  message={message}
+                  index={index}
+                  docID={documentID}
+                />
+              );
+            } else {
+              return (
+                <ChatMessageRight
+                  message={message}
+                  index={index}
+                  docID={documentID}
+                />
+              );
+            }
+          })}
       </Grid>
     </div>
   );

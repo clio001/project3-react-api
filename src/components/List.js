@@ -21,9 +21,12 @@ export default function List() {
     loading,
     getData,
     url,
+    mark,
     userInput,
     handleUserInput,
     handleEnter,
+    collections,
+    rights,
   } = useContext(myContext);
 
   const handleChange = (event) => {
@@ -49,7 +52,40 @@ export default function List() {
         <Logo />
       </div>
       <Box ml={1}>
-        <Chip variant="filled" color="secondary" label={userInput} />
+        <Box>
+          {userInput != "" && (
+            <Chip
+              variant="filled"
+              color="secondary"
+              label={userInput}
+              style={{
+                marginRight: "0.2rem",
+                marginBottom: "0.3rem",
+              }}
+            />
+          )}
+          <Chip
+            variant="filled"
+            color="secondary"
+            label={collections}
+            style={{ marginRight: "0.2rem", marginBottom: "0.3rem" }}
+          />
+          {rights != "" && (
+            <Chip
+              variant="filled"
+              color="secondary"
+              label={rights}
+              style={{ marginRight: "0.2rem", marginBottom: "0.3rem" }}
+            />
+          )}
+
+          <Chip
+            variant="filled"
+            color="secondary"
+            label={mark}
+            style={{ marginRight: "0.2rem", marginBottom: "0.3rem" }}
+          />
+        </Box>
         <Typography variant="h6" mt={2}>
           Ergebnisse: {myData && myData.totalResults}
         </Typography>

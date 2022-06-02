@@ -1,19 +1,28 @@
-import { FamilyRestroomRounded } from "@mui/icons-material";
-import { elementAcceptingRef } from "@mui/utils";
-import { createContext, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { db } from "../config";
+import {
+  collection,
+  query,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  addDoc,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 export const myContext = createContext();
 
 export const MyContextProvider = (props) => {
   const [test, setTest] = useState({ name: "John", password: "tomato" });
-  const checkboxElement = useRef();
-  console.log(checkboxElement);
 
   const [myData, setMyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userInput, setUserInput] = useState("Mauer");
   const [rights, setRights] = useState("");
-  let [collection, setCollection] = useState(["Deutsche Fotothek"]);
+  let [collections, setCollection] = useState(["Deutsche Fotothek"]);
   const [sort, setSort] = useState("");
   const [rows, setRows] = useState("20");
   const [fotothek, setFotothek] = useState(true);
@@ -21,10 +30,10 @@ export const MyContextProvider = (props) => {
   const [mark, setMark] = useState("20");
   const [score, setScore] = useState(false);
   const [random, setRandom] = useState(true);
+  const { user } = useContext(AuthContext);
 
-  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&rows=${rows}&query=${collection}+${userInput}${rights}${sort}`;
-  console.log("API URL: ", url);
-  console.log("Collection : ", collection);
+  const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&reusability=${rights}&rows=${rows}&query=${collections}+${userInput}${sort}`;
+  /* console.log("API URL: ", url); */
 
   const getData = () => {
     fetch(url)
@@ -57,11 +66,9 @@ export const MyContextProvider = (props) => {
 
   const handleReusability = (event) => {
     setRights(event.target.value);
-    console.log("Rechte: ", event.target.value);
   };
 
   const handleSort = (event) => {
-    console.log("Sortierung: ", event.target.value);
     setSort(`&sort=${event.target.value}`);
     if (event.target.value === "score") {
       setScore(true);
@@ -73,37 +80,91 @@ export const MyContextProvider = (props) => {
   };
 
   const handleSlider = (event) => {
-    console.log("Rows: ", event.target.value);
     setMark(event.target.value);
     setRows(event.target.value);
   };
 
   const handleFotothek = (event) => {
     if (event.target.checked) {
-      collection.push(event.target.value);
+      collections.push(event.target.value);
       setFotothek(true);
     } else {
-      let item = collection.indexOf(event.target.value);
-      collection.splice(item, 1);
-      setCollection(collection);
-      console.log("Collection after slicing: ", collection);
-
+      let item = collections.indexOf(event.target.value);
+      collections.splice(item, 1);
+      setCollection(collections);
       setFotothek(false);
     }
   };
 
   const handleWelle = (event) => {
     if (event.target.checked) {
-      collection.push(event.target.value);
+      collections.push(event.target.value);
       setWelle(true);
     } else {
-      let item = collection.indexOf(event.target.value);
-      collection.splice(item, 1);
-      setCollection(collection);
-      console.log("Collection after splicing: ", collection);
+      let item = collections.indexOf(event.target.value);
+      collections.splice(item, 1);
+      setCollection(collections);
       setWelle(false);
     }
   };
+
+  // * Firestore
+
+  // console.log("DB: ", db);
+
+  const [messages, setMessages] = useState(null);
+  const [chatMsg, setChatMsg] = useState("");
+  const [documentID, setDocumentID] = useState("");
+
+  const getMessages = () => {
+    const q = query(collection(db, "chat"), orderBy("date"));
+    onSnapshot(q, (querySnapshot) => {
+      const myMessages = [];
+      querySnapshot.forEach((doc) => {
+        myMessages.push(doc.data());
+      });
+      setMessages(myMessages);
+    });
+  };
+
+  // ? Deprecated Firestore method to read data from chat database. Replaced by realtime update listener method above.
+  /*   const getMessages = async () => {
+    const querySnapshot = await getDocs(collection(db, "chat"));
+    const myMessages = [];
+    querySnapshot.forEach((doc) => {
+      myMessages.push(doc.data());
+    });
+    console.log(myMessages);
+    setMessages(myMessages);
+  }; */
+
+  const handleNewMsg = (event) => {
+    setChatMsg(event.target.value);
+  };
+
+  const addChatMsg = async () => {
+    const chatMsgObject = {
+      author: user.email,
+      text: chatMsg,
+      date: new Date(),
+    };
+    try {
+      const docRef = await addDoc(collection(db, "chat"), chatMsgObject);
+      setDocumentID(docRef.id);
+      const idField = doc(db, "chat", docRef.id);
+      await updateDoc(idField, {
+        id: docRef.id,
+      });
+    } catch (error) {
+      console.log("Error adding document: ", error);
+    }
+
+    window.scrollTo(0, document.body.scrollHeight);
+  };
+
+  useEffect(() => {
+    getMessages();
+  }, [documentID]);
 
   return (
     <myContext.Provider
@@ -124,7 +185,6 @@ export const MyContextProvider = (props) => {
         handleReusability,
         handleSort,
         handleSlider,
-        checkboxElement,
         fotothek,
         welle,
         handleWelle,
@@ -132,6 +192,12 @@ export const MyContextProvider = (props) => {
         mark,
         score,
         random,
+        collections,
+        messages,
+        handleNewMsg,
+        addChatMsg,
+        documentID,
+        user,
       }}
     >
       {props.children}

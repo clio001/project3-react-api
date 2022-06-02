@@ -181,12 +181,12 @@ export default function AdvancedSearch(props) {
                 color="secondary"
                 onChange={handleReusability}
               >
-                <MenuItem value="">
+                <MenuItem value="Alle">
                   <em>Alle</em>
                 </MenuItem>
-                <MenuItem value="&reusability=open">Open</MenuItem>
-                <MenuItem value="&reusability=restricted">Restricted</MenuItem>
-                <MenuItem value="&reusability=permission">Permission</MenuItem>
+                <MenuItem value="open">Open</MenuItem>
+                <MenuItem value="restricted">Restricted</MenuItem>
+                <MenuItem value="permission">Permission</MenuItem>
               </Select>
             </FormControl>
           </Box>

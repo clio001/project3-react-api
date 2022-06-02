@@ -46,14 +46,10 @@ export default function Footer() {
       <BottomNavigation
         sx={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <IconButton onClick={redirectToLogin}>
-          <AccountCircleIcon color="secondary" />
-        </IconButton>
-
         <IconButton onClick={handleShow}>
           <FilterListIcon color="secondary" />
         </IconButton>

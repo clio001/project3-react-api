@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useState } from "react";
 import { Button } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 

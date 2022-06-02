@@ -7,7 +7,6 @@ import { jsPDF } from "jspdf";
 export default function PDFButton(props) {
   const location = props.element;
   const itemRecord = props.fetch;
-  console.log(itemRecord);
 
   // ? region Copyright (c) 2010-2021 James Hall, https://github.com/MrRio/jsPDF (c) 2015-2021 yWorks GmbH, https://www.yworks.com/
   const handlePDF = () => {

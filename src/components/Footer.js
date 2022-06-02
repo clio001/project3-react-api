@@ -1,6 +1,6 @@
 import * as React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SearchIcon from "@mui/icons-material/Search";
 
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
@@ -14,8 +14,8 @@ export default function Footer() {
       <BottomNavigation
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Link to="../login">
-          <AccountCircleIcon color="secondary" />
+        <Link to="../list">
+          <SearchIcon color="secondary" />
         </Link>
       </BottomNavigation>
     </Paper>

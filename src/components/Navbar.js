@@ -24,6 +24,7 @@ import useIsAuthenticated from "../utils/useIsAuthenticated";
 import PersonIcon from "@mui/icons-material/Person";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 export default function Navbar() {
@@ -189,9 +190,17 @@ export default function Navbar() {
                 </Typography>
               </Link>
             </Grid>
-            {status && (
+            {status ? (
               <Grid item xs={4} style={{ textAlign: "end" }}>
                 <LogoutButton />
+              </Grid>
+            ) : (
+              <Grid item xs={4} style={{ textAlign: "end" }}>
+                <Link to="/login">
+                  <IconButton>
+                    <PersonOutlineOutlinedIcon sx={{ color: "white" }} />
+                  </IconButton>
+                </Link>
               </Grid>
             )}
           </Grid>
