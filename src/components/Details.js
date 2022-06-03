@@ -4,17 +4,30 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { BookmarkContext } from "../context/BookmarkContext";
 import BookmarkButton from "./BookmarkButton";
 import PDFButton from "./PDFButton";
 import ShareButton from "./ShareButton";
+import {
+  doc,
+  setDoc,
+  deleteDoc,
+  collection,
+  updateDoc,
+  query,
+  onSnapshot,
+  where,
+} from "firebase/firestore";
+import { db } from "../config";
 
 export default function Details() {
-  const { status } = useContext(AuthContext);
+  const { status, user } = useContext(AuthContext);
   window.scrollTo(0, 0);
   const location = useLocation();
   const [itemRecord, setItemRecord] = useState(null);
-
+  const { checked, setChecked } = useContext(BookmarkContext);
   const url = location.state.element.link;
+  const [id, setId] = useState("");
 
   const getRecords = () => {
     fetch(url)
@@ -47,6 +60,71 @@ export default function Details() {
     getRecords(url);
   }, []);
 
+  // * Add Bookmark
+
+  // generate random string ID
+
+  function makeid() {
+    let id = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < 10; i++) {
+      id += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    console.log(id);
+    setId(id);
+  }
+
+  const addBookmark = async () => {
+    try {
+      const docRef = await setDoc(
+        doc(db, `user/${user.email}/bookmarks`, `${id}`),
+        {
+          title: location.state.element.title,
+          institution: location.state.element.dataProvider,
+          date: new Date(),
+          id: id,
+        }
+      );
+      console.log(user.email);
+      setChecked(true);
+    } catch (error) {
+      console.log("Error adding bookmark: ", error);
+    }
+  };
+
+  // * Remove Bookmark
+
+  const removeBookmark = async () => {
+    await deleteDoc(doc(db, `user/${user.email}/bookmarks`, `${id}`));
+    setChecked(false);
+  };
+
+  // * Set status for bookmark icon
+
+  const bookmarkIconStatus = () => {
+    const bookmarkQuery = query(
+      collection(db, `user/${user.email}/bookmarks`, where("id", "==", `${id}`))
+    );
+    onSnapshot(bookmarkQuery, (querySnapshot) => {
+      const myDocument = [];
+      querySnapshot.forEach((doc) => {
+        myDocument.push(doc.data());
+      });
+      console.log("BookmarkIconStatus query: ", myDocument);
+      myDocument ? setChecked(true) : setChecked(false);
+    });
+  };
+
+  useEffect(() => {
+    makeid();
+  }, []);
+
+  useEffect(() => {
+    /* bookmarkIconStatus(); */
+  }, []);
+
   return (
     <>
       {itemRecord && (
@@ -67,8 +145,18 @@ export default function Details() {
               >
                 {" "}
                 <ShareButton itemRecord={itemRecord} />
-                <PDFButton element={location} fetch={itemRecord} />
-                {status && <BookmarkButton />}
+                <PDFButton
+                  element={location}
+                  fetch={itemRecord}
+                  checked={checked}
+                />
+                {status && (
+                  <BookmarkButton
+                    remove={removeBookmark}
+                    add={addBookmark}
+                    checked={checked}
+                  />
+                )}
               </Box>
               <Typography variant="h6">
                 {typeof itemRecord.object.proxies[1].dcTitle == "undefined"
@@ -124,8 +212,12 @@ export default function Details() {
                     {typeof itemRecord.object.proxies[1].dcSubject ==
                     "undefined"
                       ? "Kein Eintrag"
-                      : getSubjects(itemRecord).map((each, i) => {
-                          return <span id="category-item">{each}</span>;
+                      : getSubjects(itemRecord).map((each, index) => {
+                          return (
+                            <span id="category-item" key={index}>
+                              {each}
+                            </span>
+                          );
                         })}
                   </Typography>
                 </Grid>

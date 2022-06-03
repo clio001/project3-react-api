@@ -1,24 +1,11 @@
-import React, { useContext, useState } from "react";
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Grid,
-  Typography,
-  Paper,
-  InputBase,
-  IconButton,
-} from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import React, { useContext } from "react";
+import { Box, Grid, Typography } from "@mui/material";
 import ChatMessageLeft from "./ChatMessageLeft";
 import ChatMessageRight from "./ChatMessageRight";
 import { myContext } from "../context/MyContext";
-import { AuthContext } from "../context/AuthContext";
 
 export default function Chat() {
-  const { messages, handleNewMsg, addChatMsg, documentID } =
-    useContext(myContext);
-  const { user } = useContext(AuthContext);
+  const { messages, documentID } = useContext(myContext);
 
   return (
     <div

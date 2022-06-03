@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { createContext, useState } from "react";
 import {
   createUserWithEmailAndPassword,
@@ -15,6 +15,7 @@ export const AuthContextProvider = (props) => {
   const [status, setStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const [unfold, setUnfold] = useState(false);
+
   function closeBanner() {
     setOpen(false);
   }
@@ -44,6 +45,7 @@ export const AuthContextProvider = (props) => {
       setOpen(true);
       setStatus(true);
       setTimeout(closeBanner, 3000);
+      console.log(user.email);
     });
   };
 

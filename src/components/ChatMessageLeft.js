@@ -8,12 +8,13 @@ import { myContext } from "../context/MyContext";
 export default function ChatMessageLeft(props) {
   const message = props.message;
   const index = props.index;
-  const { user } = useContext(myContext);
+  const { user, chatMsg, setChatMsg } = useContext(myContext);
 
   const id = message.id;
 
   const deleteChatMsg = async () => {
     await deleteDoc(doc(db, "chat", id));
+    setChatMsg("");
   };
 
   const messageDate = (time) => {

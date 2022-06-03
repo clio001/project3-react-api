@@ -108,7 +108,7 @@ export const MyContextProvider = (props) => {
     }
   };
 
-  // * Firestore
+  // * Firestore chat functions
 
   // console.log("DB: ", db);
 
@@ -127,7 +127,7 @@ export const MyContextProvider = (props) => {
     });
   };
 
-  // ? Deprecated Firestore method to read data from chat database. Replaced by realtime update listener method above.
+  // ? Out-of-use Firestore method to read data from chat database. Replaced by realtime update listener method above.
   /*   const getMessages = async () => {
     const querySnapshot = await getDocs(collection(db, "chat"));
     const myMessages = [];
@@ -166,6 +166,10 @@ export const MyContextProvider = (props) => {
     getMessages();
   }, [documentID]);
 
+  useEffect(() => {
+    getData(url);
+  }, []);
+
   return (
     <myContext.Provider
       value={{
@@ -196,6 +200,7 @@ export const MyContextProvider = (props) => {
         messages,
         handleNewMsg,
         addChatMsg,
+        chatMsg,
         documentID,
         user,
       }}

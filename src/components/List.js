@@ -96,7 +96,7 @@ export default function List() {
             return <Item key={element.id} element={element} />;
           })}
       </Grid>{" "}
-      <Stack spacing={0} mb={10}>
+      {/*       <Stack spacing={0} mb={10}>
         <Pagination
           count={myData && myData.totalResults}
           variant="outlined"
@@ -104,7 +104,7 @@ export default function List() {
           page={page}
           onChange={handleChange}
         />
-      </Stack>
+      </Stack> */}
     </>
   );
 }
