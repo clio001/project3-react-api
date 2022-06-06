@@ -27,6 +27,8 @@ export default function List() {
     handleEnter,
     collections,
     rights,
+    filteredData,
+    setFilteredData,
   } = useContext(myContext);
 
   const handleChange = (event) => {
@@ -91,8 +93,8 @@ export default function List() {
         </Typography>
       </Box>
       <Grid container mt={2} mb={2}>
-        {myData &&
-          myData.items.map((element) => {
+        {filteredData &&
+          filteredData.items.map((element) => {
             return <Item key={element.id} element={element} />;
           })}
       </Grid>{" "}

@@ -19,6 +19,7 @@ export const MyContextProvider = (props) => {
   const [test, setTest] = useState({ name: "John", password: "tomato" });
 
   const [myData, setMyData] = useState(null);
+  const [filteredData, setFilteredData] = useState(myData);
   const [loading, setLoading] = useState(true);
   const [userInput, setUserInput] = useState("Mauer");
   const [rights, setRights] = useState("");
@@ -32,6 +33,8 @@ export const MyContextProvider = (props) => {
   const [random, setRandom] = useState(true);
   const { user } = useContext(AuthContext);
 
+  // * Initial Fetch
+
   const url = `https://api.europeana.eu/record/v2/search.json?wskey=menewitono&reusability=${rights}&rows=${rows}&query=${collections}+${userInput}${sort}`;
   /* console.log("API URL: ", url); */
 
@@ -40,9 +43,13 @@ export const MyContextProvider = (props) => {
       .then((response) => response.json())
       .then((myData) => {
         setMyData(myData);
+        setFilteredData(myData);
         setLoading(false);
+        console.log(myData);
       });
   };
+
+  // * Handle user events
 
   const handleUserInput = () => {
     let value = document.querySelector("#userInputValue").value;
@@ -203,6 +210,8 @@ export const MyContextProvider = (props) => {
         chatMsg,
         documentID,
         user,
+        filteredData,
+        setFilteredData,
       }}
     >
       {props.children}

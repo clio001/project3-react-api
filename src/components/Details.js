@@ -8,6 +8,8 @@ import { BookmarkContext } from "../context/BookmarkContext";
 import BookmarkButton from "./BookmarkButton";
 import PDFButton from "./PDFButton";
 import ShareButton from "./ShareButton";
+import MapButton from "./MapButton";
+import { Helmet } from "react-helmet";
 import {
   doc,
   setDoc,
@@ -125,10 +127,32 @@ export default function Details() {
     /* bookmarkIconStatus(); */
   }, []);
 
+  const meta = {
+    title: "New Title",
+  };
+
   return (
     <>
       {itemRecord && (
         <Box>
+          <Helmet>
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:site" content="@1989_app" />
+            <meta name="twitter:creator" content="@john_woitkowitz" />
+            <meta
+              property="og:url"
+              content="http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/"
+            />
+            <meta property="og:title" content="A Twitter for My Sister" />
+            <meta
+              property="og:description"
+              content="In the early days, Twitter grew so quickly that it was almost impossible to add new features because engineers spent their time trying to keep the rocket ship from stalling."
+            />
+            <meta
+              property="og:image"
+              content={location.state.element.edmPreview}
+            />
+          </Helmet>
           <Paper elevation={3}>
             <img
               src={location.state.element.edmPreview}
@@ -145,17 +169,21 @@ export default function Details() {
               >
                 {" "}
                 <ShareButton itemRecord={itemRecord} />
-                <PDFButton
-                  element={location}
-                  fetch={itemRecord}
-                  checked={checked}
-                />
+                <MapButton location={location} />
                 {status && (
-                  <BookmarkButton
-                    remove={removeBookmark}
-                    add={addBookmark}
-                    checked={checked}
-                  />
+                  <>
+                    <PDFButton
+                      element={location}
+                      fetch={itemRecord}
+                      checked={checked}
+                    />
+
+                    <BookmarkButton
+                      remove={removeBookmark}
+                      add={addBookmark}
+                      checked={checked}
+                    />
+                  </>
                 )}
               </Box>
               <Typography variant="h6">

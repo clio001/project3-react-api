@@ -38,3 +38,8 @@ Link {
 .LoginWhite {
   color: white;
 }
+
+.leaflet-container {
+  height: 84vh;
+  width: 100vw;
+}

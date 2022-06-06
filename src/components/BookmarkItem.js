@@ -4,6 +4,8 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../config";
 import { myContext } from "../context/MyContext";
+import MapButton from "./MapButton";
+import { Box } from "@mui/system";
 
 export default function BookmarkItem({ bookmark, index }) {
   const { myData } = useContext(myContext);
@@ -51,7 +53,16 @@ export default function BookmarkItem({ bookmark, index }) {
           marginTop: "0.5rem",
         }}
       >
-        <DeleteOutlineIcon color="secondary" />
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <MapButton />
+          <DeleteOutlineIcon color="secondary" />
+        </Box>
       </ListItemIcon>
     </Paper>
   );

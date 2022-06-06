@@ -1,6 +1,5 @@
 import * as React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Paper from "@mui/material/Paper";
 import {
@@ -15,13 +14,15 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
-import { useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
+import { useState, useContext } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import { useNavigate } from "react-router-dom";
+import { myContext } from "../context/MyContext";
 
 export default function Footer() {
   const [show, setShow] = useState(false);
+  const { myData, getData, filteredData, setFilteredData } =
+    useContext(myContext);
 
   const handleShow = () => {
     if (show) {
@@ -31,11 +32,60 @@ export default function Footer() {
     }
   };
 
-  const handleInstitution = () => {};
-
   const navigate = useNavigate();
   const redirectToLogin = () => {
     navigate("/login");
+  };
+
+  // * FORMAT TIMESTAMP JSON ENTRY
+
+  const messageDate = (time) => {
+    return new Date(time * 1000).toLocaleTimeString("de-DE", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  // * POPULATE FILTER DROPDOWNS WITH UNIQUE ITEMS
+
+  const selectUniqueCreators = (array) => {
+    let items = [];
+    array.map((element) => {
+      if (typeof element.dcCreator == "undefined") {
+        items.push("Kein Eintrag");
+      } else {
+        items.push(element.dcCreator[0]);
+      }
+    });
+    let uniqueItems = [...new Set(items)];
+    return uniqueItems;
+  };
+
+  const selectUniqueInstitutions = (array) => {
+    let items = [];
+    array.map((element) => {
+      if (typeof element.dataProvider == "undefined") {
+        items.push("Kein Eintrag");
+      } else {
+        items.push(element.dataProvider[0]);
+      }
+    });
+    let uniqueItems = [...new Set(items)];
+    return uniqueItems;
+  };
+
+  // * FILTER SEARCH RESULT in LIST
+
+  const handleChangeInstitutions = (event) => {
+    let filteredItems = [{ items: [] }];
+    filteredItems.items = filteredData.items.filter((item) => {
+      return item.dataProvider.includes(event.target.value);
+    });
+    console.log("Filtered item: ", filteredItems);
+    setFilteredData(filteredItems);
   };
 
   return (
@@ -89,17 +139,15 @@ export default function Footer() {
                   id="demo-select-small"
                   label="Institution"
                   color="secondary"
+                  onChange={handleChangeInstitutions}
                 >
                   <MenuItem value="">
                     <em>Alle</em>
                   </MenuItem>
-                  <MenuItem value="Deutsche Fotothek">
-                    Deutsche Fotothek
-                  </MenuItem>
-                  <MenuItem value="Deutsche Welle">Deutsche Welle</MenuItem>
-                  <MenuItem value="Landesarchiv Berlin">
-                    Landesarchiv Berlin
-                  </MenuItem>
+                  {myData &&
+                    selectUniqueInstitutions(myData.items).map((element) => {
+                      return <MenuItem value={element}>{element}</MenuItem>;
+                    })}
                 </Select>
               </FormControl>
             </Box>
@@ -121,42 +169,10 @@ export default function Footer() {
                   <MenuItem value="">
                     <em>Alle</em>
                   </MenuItem>
-                  <MenuItem value="Deutsche Fotothek">
-                    Deutsche Fotothek
-                  </MenuItem>
-                  <MenuItem value="Deutsche Welle">Deutsche Welle</MenuItem>
-                  <MenuItem value="Landesarchiv Berlin">
-                    Landesarchiv Berlin
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-
-            <Box
-              mt={2}
-              mb={2}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <FormControl sx={{ width: "18rem" }} size="small">
-                <InputLabel id="demo-select-large" color="secondary">
-                  Kategorie
-                </InputLabel>
-                <Select
-                  labelId="demo-select-small"
-                  id="demo-select-small"
-                  label="Kategorie"
-                  color="secondary"
-                >
-                  <MenuItem value="">
-                    <em>Alle</em>
-                  </MenuItem>
-                  <MenuItem value="Deutsche Fotothek">
-                    Deutsche Fotothek
-                  </MenuItem>
-                  <MenuItem value="Deutsche Welle">Deutsche Welle</MenuItem>
-                  <MenuItem value="Landesarchiv Berlin">
-                    Landesarchiv Berlin
-                  </MenuItem>
+                  {myData &&
+                    selectUniqueCreators(myData.items).map((element) => {
+                      return <MenuItem value={element}>{element}</MenuItem>;
+                    })}
                 </Select>
               </FormControl>
             </Box>
@@ -179,13 +195,14 @@ export default function Footer() {
                   <MenuItem value="">
                     <em>Alle</em>
                   </MenuItem>
-                  <MenuItem value="Deutsche Fotothek">
-                    Deutsche Fotothek
-                  </MenuItem>
-                  <MenuItem value="Deutsche Welle">Deutsche Welle</MenuItem>
-                  <MenuItem value="Landesarchiv Berlin">
-                    Landesarchiv Berlin
-                  </MenuItem>
+                  {myData &&
+                    myData.items.map((element) => {
+                      return (
+                        <MenuItem value={messageDate(element.timestamp)}>
+                          {messageDate(element.timestamp)}
+                        </MenuItem>
+                      );
+                    })}
                 </Select>
               </FormControl>
             </Box>

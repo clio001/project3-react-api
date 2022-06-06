@@ -25,6 +25,7 @@ import {
   BookmarkContextProvider,
 } from "../context/BookmarkContext";
 import ProtectedRoute from "./ProtectedRoute";
+import ViewMap from "../screens/ViewMap";
 
 function App() {
   return (
@@ -38,6 +39,18 @@ function App() {
               <Route path="item" element={<ViewItem />} />
               <Route path="login" element={<ViewLogin />} />
               <Route path="register" element={<ViewRegister />} />
+              <Route path="/" element={<ViewHome />} />
+              <Route path="about" element={<ViewAbout />} />
+              <Route path="data" element={<ViewData />} />
+              <Route path="impressum" element={<ViewContact />} />
+              <Route
+                path="map"
+                element={
+                  <ProtectedRoute>
+                    <ViewMap />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="chat"
                 element={
@@ -54,10 +67,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/" element={<ViewHome />} />
-              <Route path="about" element={<ViewAbout />} />
-              <Route path="data" element={<ViewData />} />
-              <Route path="impressum" element={<ViewContact />} />
             </Routes>
           </BookmarkContextProvider>
         </MyContextProvider>
