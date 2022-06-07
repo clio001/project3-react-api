@@ -102,13 +102,14 @@ export default function Login() {
               </IconButton>
               <Button color="secondary">Erstellen</Button>
             </Link>
+            {/* 
             <Link to="/">
               {" "}
               <IconButton>
                 <GoogleIcon />
               </IconButton>
               <Button color="secondary">Google</Button>
-            </Link>
+            </Link> */}
           </Box>
         </Box>
       </div>

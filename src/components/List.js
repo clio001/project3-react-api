@@ -9,6 +9,7 @@ import { Typography, Grid, Box } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import { Collapse, Alert } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import Pagination from "@mui/material/Pagination";
 import { myContext } from "../context/MyContext";
@@ -29,6 +30,7 @@ export default function List() {
     rights,
     filteredData,
     setFilteredData,
+    warning,
   } = useContext(myContext);
 
   const handleChange = (event) => {
@@ -49,6 +51,11 @@ export default function List() {
         <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
           <LinearProgress color="secondary" />
         </Stack>
+      )}
+      {warning && (
+        <Collapse in={warning} style={{ zIndex: "10" }}>
+          <Alert severity="info"> Bitte geben Sie einen Suchbegriff ein!</Alert>
+        </Collapse>
       )}
       <div className="logo">
         <Logo />

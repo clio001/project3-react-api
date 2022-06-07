@@ -1,7 +1,11 @@
 import * as React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
+import { BottomNavigationAction } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import ForumIcon from "@mui/icons-material/Forum";
 import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
 import {
   Drawer,
   IconButton,
@@ -18,11 +22,13 @@ import { useState, useContext } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import { useNavigate } from "react-router-dom";
 import { myContext } from "../context/MyContext";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Footer() {
   const [show, setShow] = useState(false);
   const { myData, getData, filteredData, setFilteredData } =
     useContext(myContext);
+  const { status } = useContext(AuthContext);
 
   const handleShow = () => {
     if (show) {
@@ -40,7 +46,7 @@ export default function Footer() {
   // * FORMAT TIMESTAMP JSON ENTRY
 
   const messageDate = (time) => {
-    return new Date(time * 1000).toLocaleTimeString("de-DE", {
+    return new Date(time).toLocaleDateString("de-DE", {
       day: "numeric",
       month: "long",
       year: "numeric",
@@ -77,6 +83,20 @@ export default function Footer() {
     return uniqueItems;
   };
 
+  const selectUniqueYears = (array) => {
+    messageDate(array);
+    let items = [];
+    array.map((element) => {
+      if (typeof element.timestamp == "undefined") {
+        items.push("Kein Eintrag");
+      } else {
+        items.push(element.timestamp);
+      }
+    });
+    let uniqueItems = [...new Set(items)];
+    return uniqueItems;
+  };
+
   // * FILTER SEARCH RESULT in LIST
 
   const handleChangeInstitutions = (event) => {
@@ -84,7 +104,25 @@ export default function Footer() {
     filteredItems.items = filteredData.items.filter((item) => {
       return item.dataProvider.includes(event.target.value);
     });
-    console.log("Filtered item: ", filteredItems);
+    setFilteredData(filteredItems);
+  };
+
+  const handleChangeCreators = (event) => {
+    let filteredItems = [{ items: [] }];
+    filteredItems.items = filteredData.items.filter((item) => {
+      return item.dcCreator.includes(event.target.value);
+    });
+    setFilteredData(filteredItems);
+  };
+
+  const handleChangeDates = (event) => {
+    console.log("Click event: ", event.target.value);
+    let filteredItems = [{ items: [] }];
+    filteredItems.items = filteredData.items.filter((item) => {
+      console.log("Item: ", item.timestamp);
+      return item.timestamp.includes(event.target.value);
+    });
+    console.log("Filtered dates: ", filteredItems.items);
     setFilteredData(filteredItems);
   };
 
@@ -96,13 +134,36 @@ export default function Footer() {
       <BottomNavigation
         sx={{
           display: "flex",
-          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
           alignItems: "center",
         }}
       >
-        <IconButton onClick={handleShow}>
-          <FilterListIcon color="secondary" />
-        </IconButton>
+        {status && (
+          <BottomNavigationAction
+            label="Recents"
+            icon={
+              <Link to="/chat">
+                <ForumIcon color="secondary" />
+              </Link>
+            }
+          />
+        )}
+        <BottomNavigationAction
+          onClick={handleShow}
+          label="Recents"
+          icon={<FilterListIcon color="secondary" />}
+        />
+        {status && (
+          <BottomNavigationAction
+            label="Recents"
+            icon={
+              <Link to="/bookmarks">
+                <CollectionsBookmarkIcon color="secondary" />
+              </Link>
+            }
+          />
+        )}
       </BottomNavigation>
       <div style={{ height: "80%" }}>
         <Drawer
@@ -139,15 +200,22 @@ export default function Footer() {
                   id="demo-select-small"
                   label="Institution"
                   color="secondary"
+                  defaultValue=""
                   onChange={handleChangeInstitutions}
                 >
                   <MenuItem value="">
                     <em>Alle</em>
                   </MenuItem>
                   {myData &&
-                    selectUniqueInstitutions(myData.items).map((element) => {
-                      return <MenuItem value={element}>{element}</MenuItem>;
-                    })}
+                    selectUniqueInstitutions(myData.items).map(
+                      (element, index) => {
+                        return (
+                          <MenuItem value={element} key={index}>
+                            {element}
+                          </MenuItem>
+                        );
+                      }
+                    )}
                 </Select>
               </FormControl>
             </Box>
@@ -165,13 +233,19 @@ export default function Footer() {
                   id="demo-select-small"
                   label="Urheber:in"
                   color="secondary"
+                  defaultValue=""
+                  onChange={handleChangeCreators}
                 >
                   <MenuItem value="">
                     <em>Alle</em>
                   </MenuItem>
                   {myData &&
-                    selectUniqueCreators(myData.items).map((element) => {
-                      return <MenuItem value={element}>{element}</MenuItem>;
+                    selectUniqueCreators(myData.items).map((element, index) => {
+                      return (
+                        <MenuItem value={element} key={index}>
+                          {element}
+                        </MenuItem>
+                      );
                     })}
                 </Select>
               </FormControl>
@@ -184,22 +258,24 @@ export default function Footer() {
             >
               <FormControl sx={{ width: "18rem" }} size="small">
                 <InputLabel id="demo-select-large" color="secondary">
-                  Jahr
+                  Datum
                 </InputLabel>
                 <Select
                   labelId="demo-select-small"
                   id="demo-select-small"
-                  label="Jahr"
+                  label="Datum"
                   color="secondary"
+                  defaultValue=""
+                  onChange={handleChangeDates}
                 >
                   <MenuItem value="">
                     <em>Alle</em>
                   </MenuItem>
                   {myData &&
-                    myData.items.map((element) => {
+                    selectUniqueYears(myData.items).map((element, index) => {
                       return (
-                        <MenuItem value={messageDate(element.timestamp)}>
-                          {messageDate(element.timestamp)}
+                        <MenuItem value={element} key={index}>
+                          {messageDate(element)} Uhr
                         </MenuItem>
                       );
                     })}
@@ -208,7 +284,7 @@ export default function Footer() {
             </Box>
 
             <Divider />
-            <Box sx={{ textAlign: "end" }} m={2}>
+            <Box sx={{ textAlign: "center" }} m={2}>
               <Button variant="outlined" color="secondary" onClick={handleShow}>
                 <CheckIcon />
               </Button>

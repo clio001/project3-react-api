@@ -6,9 +6,12 @@ import { db } from "../config";
 import { myContext } from "../context/MyContext";
 import MapButton from "./MapButton";
 import { Box } from "@mui/system";
+import { AuthContext } from "../context/AuthContext";
+import { IconButton } from "@mui/material";
 
 export default function BookmarkItem({ bookmark, index }) {
-  const { myData } = useContext(myContext);
+  const { myData, checked, setChecked } = useContext(myContext);
+  const { user } = useContext(AuthContext);
   const messageDate = (time) => {
     return new Date(time * 1000).toLocaleTimeString("de-DE", {
       day: "numeric",
@@ -18,7 +21,14 @@ export default function BookmarkItem({ bookmark, index }) {
       minute: "2-digit",
     });
   };
-  console.log(myData);
+
+  // * Remove Bookmark
+
+  const removeBookmark = async () => {
+    await deleteDoc(doc(db, `user/${user.email}/bookmarks`, bookmark.id));
+    console.log("Item removed");
+  };
+
   return (
     <Paper
       style={{
@@ -33,11 +43,9 @@ export default function BookmarkItem({ bookmark, index }) {
       elevation={5}
     >
       <div>
-        {myData && (
-          <img src={myData.items[0].edmIsShownBy} alt="img" width="75rem" />
-        )}
+        <img src={bookmark.img} alt="img" width="75rem" />
       </div>
-      <ListItemText sx={{ marginLeft: "0.5rem" }}>
+      <ListItemText sx={{ marginLeft: "0.5rem", marginBottom: "0.7rem" }}>
         <Typography variant="subtitle2" key={index}>
           {bookmark.title}, <i>{bookmark.institution}</i>
           <Typography variant="body2" color="text.secondary">
@@ -60,8 +68,9 @@ export default function BookmarkItem({ bookmark, index }) {
             alignItems: "center",
           }}
         >
-          <MapButton />
-          <DeleteOutlineIcon color="secondary" />
+          <IconButton onClick={removeBookmark}>
+            <DeleteOutlineIcon color="secondary" />
+          </IconButton>
         </Box>
       </ListItemIcon>
     </Paper>

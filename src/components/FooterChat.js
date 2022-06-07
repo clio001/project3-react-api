@@ -1,6 +1,4 @@
 import * as React from "react";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import SearchIcon from "@mui/icons-material/Search";
 import SendIcon from "@mui/icons-material/Send";
 import { Button, InputBase, Box, ButtonGroup } from "@mui/material";
 import { myContext } from "../context/MyContext";

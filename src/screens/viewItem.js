@@ -1,6 +1,6 @@
 import React from "react";
 import Details from "../components/Details";
-import Footer from "../components/Footer";
+import FooterBack from "../components/FooterBack";
 import Navbar from "../components/Navbar";
 
 export default function viewItem() {
@@ -8,7 +8,7 @@ export default function viewItem() {
     <>
       <Navbar />
       <Details />
-      <Footer />
+      <FooterBack />
     </>
   );
 }

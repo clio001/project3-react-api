@@ -6,54 +6,57 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 
 export default function Contact() {
   return (
-    <div>
+    <Box
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "75vh",
+        textAlign: "center",
+      }}
+    >
+      {" "}
       <Typography
         variant="h4"
         component="h2"
         m={3}
-        style={{ fontFamily: "Gloria Hallelujah" }}
+        style={{ fontFamily: "Gloria Hallelujah", textAlign: "center" }}
       >
         Impressum
       </Typography>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "55vh",
-          textAlign: "center",
-        }}
+      <Typography
+        variant="body2"
+        m={2}
+        color="text.secondary"
+        style={{ textAlign: "center" }}
       >
-        <Typography
-          paragraph
-          variant="body2"
-          m={2}
-          color="text.secondary"
-          style={{ textAlign: "center" }}
-        >
-          Dr. John Woitkowitz
-          <br />
-          Friesickestraße 33
-          <br />
-          13086 Berlin
-          <br />
-          <br />
-          <Box>
-            <a href="http://www.twitter.com/john_woitkowitz" target="_blank">
-              <IconButton>
-                <TwitterIcon color="secondary" />
-              </IconButton>
-            </a>
-            <a href="mailto:j.woitkowitz@posteo.de">
-              <IconButton>
-                <EmailIcon color="secondary" />
-              </IconButton>
-            </a>
-          </Box>
-          <br />
-          Copyrights © 2022
-        </Typography>
-      </div>
-    </div>
+        Dr. John Woitkowitz
+        <br />
+        Friesickestraße 33
+        <br />
+        13086 Berlin
+      </Typography>
+      <Box style={{ textAlign: "center" }}>
+        <a href="http://www.twitter.com/john_woitkowitz" target="_blank">
+          <IconButton>
+            <TwitterIcon color="secondary" />
+          </IconButton>
+        </a>
+        <a href="mailto:j.woitkowitz@posteo.de">
+          <IconButton>
+            <EmailIcon color="secondary" />
+          </IconButton>
+        </a>
+      </Box>
+      <Typography
+        variant="body2"
+        m={2}
+        color="text.secondary"
+        style={{ textAlign: "center" }}
+      >
+        Copyrights © 2022
+      </Typography>
+    </Box>
   );
 }

@@ -34,6 +34,7 @@ export default function Chat() {
                   message={message}
                   index={index}
                   docID={documentID}
+                  key={index}
                 />
               );
             } else {
@@ -42,6 +43,7 @@ export default function Chat() {
                   message={message}
                   index={index}
                   docID={documentID}
+                  key={index}
                 />
               );
             }

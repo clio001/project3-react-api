@@ -6,12 +6,14 @@ import { AuthContext } from "../context/AuthContext";
 import useIsAuthenticated from "../utils/useIsAuthenticated";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const { user, open, unfold, register } = useContext(AuthContext);
   const isAuthenticated = useIsAuthenticated();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -28,7 +30,7 @@ export default function Register() {
 
   return (
     <>
-      {/* {isAuthenticated && <Navigate to="/chat" replace />} */}
+      {isAuthenticated && navigate(-1)}
       {user && (
         <Collapse in={open}>
           <Alert severity="success"> Account erstellt: {user.email}</Alert>

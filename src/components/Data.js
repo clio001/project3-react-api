@@ -9,7 +9,7 @@ export default function Data() {
         variant="h4"
         component="h2"
         m={3}
-        style={{ fontFamily: "Gloria Hallelujah" }}
+        style={{ fontFamily: "Gloria Hallelujah", textAlign: "center" }}
       >
         Daten
       </Typography>

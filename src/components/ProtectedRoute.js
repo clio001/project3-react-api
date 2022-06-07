@@ -4,6 +4,6 @@ import React from "react";
 
 export default function ProtectedRoute({ children }) {
   const isAuthenticated = useIsAuthenticated();
-  console.log(isAuthenticated);
+  console.log("Authentication status: ", isAuthenticated);
   return <>{isAuthenticated ? children : <Navigate to="/login" replace />}</>;
 }

@@ -42,23 +42,23 @@ export default function AdvancedSearch(props) {
   const marks = [
     {
       value: 20,
-      label: "20",
+      label: 20,
     },
     {
       value: 40,
-      label: "40",
+      label: 40,
     },
     {
       value: 60,
-      label: "60",
+      label: 60,
     },
     {
       value: 80,
-      label: "80",
+      label: 80,
     },
     {
       value: 100,
-      label: "100",
+      label: 100,
     },
   ];
 
@@ -211,7 +211,7 @@ export default function AdvancedSearch(props) {
               }}
             >
               <Slider
-                defaultValue={mark}
+                defaultValue={mark.value}
                 /* getAriaValueText={valuetext} */
                 valueLabelDisplay="auto"
                 step={10}

@@ -4,32 +4,22 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { BookmarkContext } from "../context/BookmarkContext";
 import BookmarkButton from "./BookmarkButton";
 import PDFButton from "./PDFButton";
 import ShareButton from "./ShareButton";
 import MapButton from "./MapButton";
-import { Helmet } from "react-helmet";
-import {
-  doc,
-  setDoc,
-  deleteDoc,
-  collection,
-  updateDoc,
-  query,
-  onSnapshot,
-  where,
-} from "firebase/firestore";
+import { doc, setDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { db } from "../config";
 
 export default function Details() {
   const { status, user } = useContext(AuthContext);
+  const [checked, setChecked] = useState(false);
+
   window.scrollTo(0, 0);
   const location = useLocation();
   const [itemRecord, setItemRecord] = useState(null);
-  const { checked, setChecked } = useContext(BookmarkContext);
+
   const url = location.state.element.link;
-  const [id, setId] = useState("");
 
   const getRecords = () => {
     fetch(url)
@@ -62,34 +52,33 @@ export default function Details() {
     getRecords(url);
   }, []);
 
-  // * Add Bookmark
+  // * ADD BOOKMARK
 
-  // generate random string ID
+  // * Delete unwanted slashes from item ID
 
-  function makeid() {
-    let id = "";
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const charactersLength = characters.length;
-    for (let i = 0; i < 10; i++) {
-      id += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    console.log(id);
-    setId(id);
-  }
+  const id = () => {
+    let itemID = location.state.element.id.slice(
+      5,
+      location.state.element.id.length
+    );
+    return itemID;
+  };
+
+  let finalID = id();
 
   const addBookmark = async () => {
     try {
       const docRef = await setDoc(
-        doc(db, `user/${user.email}/bookmarks`, `${id}`),
+        doc(db, `user/${user.email}/bookmarks`, finalID),
         {
           title: location.state.element.title,
           institution: location.state.element.dataProvider,
           date: new Date(),
-          id: id,
+          id: finalID,
+          img: location.state.element.edmPreview,
         }
       );
-      console.log(user.email);
+      console.log("Item added");
       setChecked(true);
     } catch (error) {
       console.log("Error adding bookmark: ", error);
@@ -99,60 +88,37 @@ export default function Details() {
   // * Remove Bookmark
 
   const removeBookmark = async () => {
-    await deleteDoc(doc(db, `user/${user.email}/bookmarks`, `${id}`));
+    await deleteDoc(doc(db, `user/${user.email}/bookmarks`, finalID));
+    console.log("Item removed");
     setChecked(false);
   };
 
   // * Set status for bookmark icon
 
-  const bookmarkIconStatus = () => {
-    const bookmarkQuery = query(
-      collection(db, `user/${user.email}/bookmarks`, where("id", "==", `${id}`))
+  const bookmarkIconStatus = async () => {
+    const bookmarkQuery = await getDoc(
+      doc(db, `user/${user.email}/bookmarks`, finalID)
     );
-    onSnapshot(bookmarkQuery, (querySnapshot) => {
-      const myDocument = [];
-      querySnapshot.forEach((doc) => {
-        myDocument.push(doc.data());
-      });
-      console.log("BookmarkIconStatus query: ", myDocument);
-      myDocument ? setChecked(true) : setChecked(false);
-    });
+    if (bookmarkQuery.exists()) {
+      console.log("Document exists");
+      setChecked(true);
+    } else {
+      console.log("Document doesn't exist");
+      setChecked(false);
+    }
   };
 
   useEffect(() => {
-    makeid();
+    id();
+    if (user) {
+      bookmarkIconStatus();
+    }
   }, []);
-
-  useEffect(() => {
-    /* bookmarkIconStatus(); */
-  }, []);
-
-  const meta = {
-    title: "New Title",
-  };
 
   return (
     <>
       {itemRecord && (
         <Box>
-          <Helmet>
-            <meta name="twitter:card" content="summary" />
-            <meta name="twitter:site" content="@1989_app" />
-            <meta name="twitter:creator" content="@john_woitkowitz" />
-            <meta
-              property="og:url"
-              content="http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/"
-            />
-            <meta property="og:title" content="A Twitter for My Sister" />
-            <meta
-              property="og:description"
-              content="In the early days, Twitter grew so quickly that it was almost impossible to add new features because engineers spent their time trying to keep the rocket ship from stalling."
-            />
-            <meta
-              property="og:image"
-              content={location.state.element.edmPreview}
-            />
-          </Helmet>
           <Paper elevation={3}>
             <img
               src={location.state.element.edmPreview}
@@ -169,7 +135,7 @@ export default function Details() {
               >
                 {" "}
                 <ShareButton itemRecord={itemRecord} />
-                <MapButton location={location} />
+                {status && <MapButton location={location} />}
                 {status && (
                   <>
                     <PDFButton

@@ -12,6 +12,7 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
+import { SecurityUpdateWarning } from "@mui/icons-material";
 
 export const myContext = createContext();
 
@@ -32,6 +33,7 @@ export const MyContextProvider = (props) => {
   const [score, setScore] = useState(false);
   const [random, setRandom] = useState(true);
   const { user } = useContext(AuthContext);
+  const [warning, setWarning] = useState(false);
 
   // * Initial Fetch
 
@@ -45,7 +47,6 @@ export const MyContextProvider = (props) => {
         setMyData(myData);
         setFilteredData(myData);
         setLoading(false);
-        console.log(myData);
       });
   };
 
@@ -53,9 +54,14 @@ export const MyContextProvider = (props) => {
 
   const handleUserInput = () => {
     let value = document.querySelector("#userInputValue").value;
-    setUserInput(value);
-    setLoading(true);
-    getData(url);
+    if (value != "") {
+      setUserInput(value);
+      setLoading(true);
+      setWarning(false);
+      getData(url);
+    } else {
+      setWarning(true);
+    }
   };
 
   const handleEnter = () => {
@@ -63,8 +69,13 @@ export const MyContextProvider = (props) => {
     inputField.addEventListener("keyup", (event) => {
       if (event.key === "Enter") {
         let value = document.querySelector("#userInputValue").value;
-        setUserInput(value);
-        setLoading(true);
+        if (value != "") {
+          setUserInput(value);
+          setLoading(true);
+          setWarning(false);
+        } else {
+          setWarning(true);
+        }
       }
     });
   };
@@ -212,6 +223,7 @@ export const MyContextProvider = (props) => {
         user,
         filteredData,
         setFilteredData,
+        warning,
       }}
     >
       {props.children}

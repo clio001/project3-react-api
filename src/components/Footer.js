@@ -1,5 +1,6 @@
 import * as React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
+import { BottomNavigationAction } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 import Paper from "@mui/material/Paper";
@@ -12,11 +13,20 @@ export default function Footer() {
       elevation={3}
     >
       <BottomNavigation
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Link to="../list">
-          <SearchIcon color="secondary" />
-        </Link>
+        <BottomNavigationAction
+          label="Search"
+          icon={
+            <Link to="../list">
+              <SearchIcon color="secondary" />
+            </Link>
+          }
+        />
       </BottomNavigation>
     </Paper>
   );

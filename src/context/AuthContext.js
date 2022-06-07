@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../config";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -15,9 +16,11 @@ export const AuthContextProvider = (props) => {
   const [status, setStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const [unfold, setUnfold] = useState(false);
+  const navigate = useNavigate();
 
   function closeBanner() {
     setOpen(false);
+    navigate(-1);
   }
 
   // * FIREBASE REGISTER FUNCTION
@@ -28,12 +31,11 @@ export const AuthContextProvider = (props) => {
       email,
       password
     );
-    console.log("Registered: ", userCredential);
-    console.log("Status: ", status);
     setUser(userCredential.user);
     setOpen(true);
     setStatus(true);
-    setTimeout(closeBanner, 3000);
+    setTimeout(closeBanner, 2000);
+    console.log("New account: ", userCredential.user.email);
   };
 
   // * FIREBASE LOGIN FUNCTION
@@ -44,8 +46,8 @@ export const AuthContextProvider = (props) => {
       setUser(user);
       setOpen(true);
       setStatus(true);
-      setTimeout(closeBanner, 3000);
-      console.log(user.email);
+      setTimeout(closeBanner, 2000);
+      console.log("User logged in: ", user.email);
     });
   };
 
@@ -73,6 +75,7 @@ export const AuthContextProvider = (props) => {
         setStatus(false);
         setUser(null);
         setOpen(false);
+        console.log("Logged out: ", user.email);
       })
       .catch((error) => {
         console.log(error);
