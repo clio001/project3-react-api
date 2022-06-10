@@ -99,7 +99,7 @@ export default function List() {
           Ergebnisse: {myData && myData.totalResults}
         </Typography>
       </Box>
-      <Grid container mt={2} mb={2}>
+      <Grid container mt={2} mb={8}>
         {filteredData &&
           filteredData.items.map((element) => {
             return <Item key={element.id} element={element} />;

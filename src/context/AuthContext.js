@@ -16,6 +16,8 @@ export const AuthContextProvider = (props) => {
   const [status, setStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const [unfold, setUnfold] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
+  const [validPassword, setValidPassword] = useState(false);
   const navigate = useNavigate();
 
   function closeBanner() {
@@ -88,7 +90,20 @@ export const AuthContextProvider = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ login, open, unfold, register, status, logout, user, auth }}
+      value={{
+        login,
+        open,
+        unfold,
+        register,
+        status,
+        logout,
+        user,
+        auth,
+        validEmail,
+        validPassword,
+        setValidEmail,
+        setValidPassword,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

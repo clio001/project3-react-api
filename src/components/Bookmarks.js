@@ -16,7 +16,7 @@ export default function Bookmarks() {
   const [bookmarkUser, setBookmarkUser] = useState([]);
 
   const getBookmarks = () => {
-    // * First get user credential from Firestore
+    // * First: get user credential from Firestore
     const userQ = query(collection(db, "user"));
     onSnapshot(userQ, (querySnapshot) => {
       const myUser = [];
@@ -27,7 +27,7 @@ export default function Bookmarks() {
       setBookmarkUser(myUser);
     });
 
-    // * Second get user's bookmark collection:
+    // * Second: get user's bookmark collection:
     const bookmarkQ = query(
       collection(db, `user/${user.email}/bookmarks`),
       orderBy("date", "desc")
@@ -93,6 +93,7 @@ export default function Bookmarks() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              marginBottom: "5rem",
             }}
           >
             {bookmarks.length === 0 && (

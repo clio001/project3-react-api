@@ -9,7 +9,16 @@ import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import GoogleIcon from "@mui/icons-material/Google";
 
 export default function Login() {
-  const { user, login, open, auth } = useContext(AuthContext);
+  const {
+    user,
+    login,
+    open,
+    auth,
+    validEmail,
+    validPassword,
+    setValidEmail,
+    setValidPassword,
+  } = useContext(AuthContext);
   const isAuthenticated = useIsAuthenticated();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +32,7 @@ export default function Login() {
   };
 
   const handleLogin = () => {
-    // TODO: include checks for input type, characters, blank spaces
+    // Regular expressions: i ignores lower/upper case
     login(email, password);
   };
 
@@ -35,6 +44,21 @@ export default function Login() {
           <Alert severity="success"> Herzlich willkommen, {user.email}!</Alert>
         </Collapse>
       )}
+      {/*       {validEmail && (
+        <Collapse in={validEmail} style={{ zIndex: "10" }}>
+          <Alert severity="warning">
+            {" "}
+            Bitte geben Sie eine gültige E-Mail ein.
+          </Alert>
+        </Collapse>
+      )}
+      {validPassword && (
+        <Collapse in={validPassword} style={{ zIndex: "10" }}>
+          <Alert severity="warning">
+            Bitte geben Sie ein gültiges Passwort ein.
+          </Alert>
+        </Collapse>
+      )} */}
       <div
         style={{
           display: "flex",

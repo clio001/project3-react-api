@@ -251,7 +251,7 @@ export default function Footer() {
               </FormControl>
             </Box>
 
-            <Box
+            {/*  <Box
               mt={2}
               mb={2}
               style={{ display: "flex", justifyContent: "center" }}
@@ -281,7 +281,7 @@ export default function Footer() {
                     })}
                 </Select>
               </FormControl>
-            </Box>
+            </Box> */}
 
             <Divider />
             <Box sx={{ textAlign: "center" }} m={2}>

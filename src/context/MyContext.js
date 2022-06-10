@@ -12,7 +12,6 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import { SecurityUpdateWarning } from "@mui/icons-material";
 
 export const myContext = createContext();
 
@@ -50,7 +49,7 @@ export const MyContextProvider = (props) => {
       });
   };
 
-  // * Handle user events
+  // * Handle search input from List
 
   const handleUserInput = () => {
     let value = document.querySelector("#userInputValue").value;
