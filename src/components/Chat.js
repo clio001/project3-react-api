@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import ChatMessageLeft from "./ChatMessageLeft";
 import ChatMessageRight from "./ChatMessageRight";
 import { myContext } from "../context/MyContext";
-
+//TODO as a general message, it would be nicer to have user's messages on the leftside (if you are a righty :P ) and the rest of the messages on the right side. You probably tried already, so this would be a nice addition.
 export default function Chat() {
   const { messages, documentID } = useContext(myContext);
 

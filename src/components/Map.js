@@ -5,7 +5,7 @@ import { myContext } from "../context/MyContext";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-
+//TODO why is this function anonymous?
 export default function () {
   const location = useLocation();
   const { user } = useContext(myContext);

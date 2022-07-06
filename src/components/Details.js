@@ -11,6 +11,8 @@ import MapButton from "./MapButton";
 import { doc, setDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { db } from "../config";
 
+//TODO as a general comment, this component got pretty big, and there are some checks that are repeated , giving us the feeling that maybe splitting them into smaller components might be a good way to make it shorter and more readable.
+
 export default function Details() {
   const { status, user } = useContext(AuthContext);
   const [checked, setChecked] = useState(false);
@@ -30,7 +32,7 @@ export default function Details() {
   };
 
   // * Loop over deSubject JSON object with nested arrays to catch all subject entries
-  let recordSubjects = [];
+  let recordSubjects = []; //TODO maybe move the array inside the function since you are not directly using it later. Or Turn it into a State Variable that you set inside getSubjects()
   const getSubjects = (itemRecord) => {
     let subjects = Object.entries(itemRecord.object.proxies[1].dcSubject);
 
@@ -64,7 +66,7 @@ export default function Details() {
     return itemID;
   };
 
-  let finalID = id();
+  let finalID = id(); //TODO instead of return itemID you could a) create a state variable, and b) set it in id()
 
   const addBookmark = async () => {
     try {
@@ -156,6 +158,9 @@ export default function Details() {
                 {typeof itemRecord.object.proxies[1].dcTitle == "undefined"
                   ? location.state.element.title
                   : itemRecord.object.proxies[1].dcTitle.de}
+
+                {/*//TODO I (Raul) do not really understand that check with
+                typeof...but if it works...  */}
               </Typography>
               <Typography
                 paragraph
