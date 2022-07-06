@@ -15,6 +15,8 @@ import {
 
 export const myContext = createContext();
 
+//TODO as a general comment, this context might be splitted into two, one for the search and one for the comments, to make it shorter
+
 export const MyContextProvider = (props) => {
   const [test, setTest] = useState({ name: "John", password: "tomato" });
 
@@ -68,6 +70,7 @@ export const MyContextProvider = (props) => {
     inputField.addEventListener("keyup", (event) => {
       if (event.key === "Enter") {
         let value = document.querySelector("#userInputValue").value;
+        //TODO the comparison below isn't working
         if (value != "") {
           setUserInput(value);
           setLoading(true);

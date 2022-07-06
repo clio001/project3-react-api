@@ -23,6 +23,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { useNavigate } from "react-router-dom";
 import { myContext } from "../context/MyContext";
 import { AuthContext } from "../context/AuthContext";
+//TODO the filter function needs to be fixed
 
 export default function Footer() {
   const [show, setShow] = useState(false);
